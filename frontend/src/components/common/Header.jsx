@@ -18,12 +18,14 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { useCompare } from '../../context/CompareContext';
 import api from '../../services/api';
 
 const Header = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const { itemCount } = useCart();
   const { wishlistCount } = useWishlist();
+  const { compareCount, openCompareModal } = useCompare();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,6 +34,18 @@ const Header = () => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartBouncing, setCartBouncing] = useState(false);
+
+  const prevCountRef = useRef(itemCount);
+
+  useEffect(() => {
+    if (itemCount > prevCountRef.current) {
+      setCartBouncing(true);
+      const timer = setTimeout(() => setCartBouncing(false), 900);
+      return () => clearTimeout(timer);
+    }
+    prevCountRef.current = itemCount;
+  }, [itemCount]);
 
   const categoriesRef = useRef(null);
   const userMenuRef = useRef(null);
@@ -158,6 +172,21 @@ const Header = () => {
 
           {/* User Actions */}
           <div className="nav-actions">
+            {/* Compare */}
+            <button
+              type="button"
+              className="action-item compare-header-trigger-btn"
+              onClick={openCompareModal}
+              aria-label="View Product Comparison"
+              title="Compare Electronics"
+            >
+              <div className="icon-badge-box">
+                <Sliders size={22} />
+                {compareCount > 0 && <span className="badge-pill count-compare">{compareCount}</span>}
+              </div>
+              <span className="action-label">Compare</span>
+            </button>
+
             {/* Wishlist */}
             <Link to="/wishlist" className="action-item" aria-label="View Wishlist">
               <div className="icon-badge-box">
@@ -167,11 +196,15 @@ const Header = () => {
               <span className="action-label">Wishlist</span>
             </Link>
 
-            {/* Cart */}
-            <Link to="/cart" className="action-item" aria-label="View Cart">
+            {/* Cart with Bounce Micro-Interaction */}
+            <Link to="/cart" className={`action-item ${cartBouncing ? 'cart-bouncing' : ''}`} aria-label="View Cart">
               <div className="icon-badge-box">
-                <ShoppingCart size={22} />
-                {itemCount > 0 && <span className="badge-pill count-cart">{itemCount}</span>}
+                <ShoppingCart size={22} className={cartBouncing ? 'icon-wiggle' : ''} />
+                {itemCount > 0 && (
+                  <span className={`badge-pill count-cart ${cartBouncing ? 'badge-pulse-pop' : ''}`}>
+                    {itemCount}
+                  </span>
+                )}
               </div>
               <span className="action-label">Cart</span>
             </Link>

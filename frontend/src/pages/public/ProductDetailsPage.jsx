@@ -10,7 +10,9 @@ import {
   CheckCircle,
   AlertCircle,
   Share2,
-  ChevronRight
+  ChevronRight,
+  Sliders,
+  Check
 } from 'lucide-react';
 import PriceDisplay from '../../components/common/PriceDisplay';
 import RatingStars from '../../components/common/RatingStars';
@@ -20,6 +22,7 @@ import ProductCard from '../../components/products/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { useCompare } from '../../context/CompareContext';
 import { useToast } from '../../context/ToastContext';
 import api from '../../services/api';
 
@@ -28,6 +31,7 @@ const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { isInCompare, toggleCompare } = useCompare();
   const { showToast } = useToast();
 
   const [product, setProduct] = useState(null);
@@ -36,6 +40,7 @@ const ProductDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('specs'); // 'specs' | 'reviews'
+  const [isAdded, setIsAdded] = useState(false);
 
   const fetchProductDetails = async () => {
     try {
@@ -75,11 +80,16 @@ const ProductDetailsPage = () => {
   }
 
   const inWishlist = isInWishlist(product._id);
+  const inCompare = isInCompare(product._id);
   const isOutOfStock = product.stock <= 0;
   const isLowStock = product.stock > 0 && product.stock <= 5;
 
   const handleAddToCart = async () => {
     const success = await addToCart(product, quantity);
+    if (success) {
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 1400);
+    }
     return success;
   };
 
@@ -241,11 +251,20 @@ const ProductDetailsPage = () => {
                 <div className="cta-buttons-cluster">
                   <button
                     type="button"
-                    className="btn btn-primary btn-lg btn-add-main"
+                    className={`btn btn-primary btn-lg btn-add-main ${isAdded ? 'btn-added-pop' : ''}`}
                     onClick={handleAddToCart}
                   >
-                    <ShoppingCart size={20} />
-                    <span>Add to Cart</span>
+                    {isAdded ? (
+                      <>
+                        <Check size={20} />
+                        <span>Added to Cart! ✓</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart size={20} />
+                        <span>Add to Cart</span>
+                      </>
+                    )}
                   </button>
 
                   <button
@@ -268,6 +287,15 @@ const ProductDetailsPage = () => {
                       fill={inWishlist ? '#EF4444' : 'transparent'}
                       color={inWishlist ? '#EF4444' : '#64748B'}
                     />
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`btn-details-wishlist btn-details-compare ${inCompare ? 'active' : ''}`}
+                    onClick={() => toggleCompare(product)}
+                    title={inCompare ? 'Remove from Comparison' : 'Compare with other electronics'}
+                  >
+                    <Sliders size={20} />
                   </button>
 
                   <button

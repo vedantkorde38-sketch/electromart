@@ -14,6 +14,7 @@ import {
 import { formatINR } from '../../utils/currency';
 import { useToast } from '../../context/ToastContext';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import OrderTrackingStepper from '../../components/orders/OrderTrackingStepper';
 import api from '../../services/api';
 
 const OrderDetailsPage = () => {
@@ -131,36 +132,9 @@ const OrderDetailsPage = () => {
           </div>
         </div>
 
-        {/* Order Progress Tracker */}
-        <div className="order-tracker-card">
-          <h3 className="tracker-heading">Order Status Tracker</h3>
-          {isCancelled ? (
-            <div className="cancelled-alert-banner">
-              <XCircle size={24} className="text-danger" />
-              <div>
-                <h4>This order was cancelled</h4>
-                <p>
-                  Reason: {order.cancellationReason || 'Cancelled by customer'} • Cancelled on{' '}
-                  {order.cancelledAt ? new Date(order.cancelledAt).toLocaleDateString('en-IN') : 'N/A'}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="status-timeline-track">
-              {orderStatuses.map((st, idx) => {
-                const isPassed = idx <= currentStatusIdx;
-                const isCurrent = idx === currentStatusIdx;
-                return (
-                  <div key={st} className={`timeline-step ${isPassed ? 'passed' : ''} ${isCurrent ? 'current' : ''}`}>
-                    <div className="step-circle">
-                      {isPassed ? <CheckCircle size={16} /> : <span>{idx + 1}</span>}
-                    </div>
-                    <span className="step-label">{st}</span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+        {/* Live Delivery Status & Courier Tracking */}
+        <div className="mb-4">
+          <OrderTrackingStepper orderStatus={order.orderStatus} orderDate={order.createdAt} />
         </div>
 
         {/* 2-Column Info Grid */}

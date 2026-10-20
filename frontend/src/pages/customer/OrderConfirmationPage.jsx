@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { CheckCircle2, Package, Printer, ArrowRight, ShieldCheck, Truck, Home } from 'lucide-react';
 import { formatINR } from '../../utils/currency';
+import { triggerConfetti } from '../../utils/confetti';
+import OrderTrackingStepper from '../../components/orders/OrderTrackingStepper';
 import api from '../../services/api';
 
 const OrderConfirmationPage = () => {
@@ -10,6 +12,11 @@ const OrderConfirmationPage = () => {
 
   const [order, setOrder] = useState(location.state?.order || null);
   const [loading, setLoading] = useState(!location.state?.order);
+
+  // Trigger celebration confetti upon arriving on confirmation page
+  useEffect(() => {
+    triggerConfetti(4000);
+  }, []);
 
   useEffect(() => {
     if (!order && orderNumber) {
@@ -58,6 +65,14 @@ const OrderConfirmationPage = () => {
             <span>Order Reference:</span>
             <strong>{order?.orderNumber || orderNumber}</strong>
           </div>
+        </div>
+
+        {/* Live Delivery Tracking Stepper */}
+        <div className="mt-4 mb-4">
+          <OrderTrackingStepper
+            orderStatus={order?.orderStatus || 'Confirmed'}
+            orderDate={order?.createdAt}
+          />
         </div>
 
         {/* Order Details Grid */}

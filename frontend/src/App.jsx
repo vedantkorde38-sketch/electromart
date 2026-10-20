@@ -6,10 +6,13 @@ import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { CompareProvider } from './context/CompareContext';
 
 // Common Layout Elements
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import CompareFloatingDock from './components/compare/CompareFloatingDock';
+import CompareModal from './components/compare/CompareModal';
 import { ProtectedRoute, AdminRoute } from './components/routing/ProtectedRoute';
 
 // Public Pages
@@ -134,6 +137,8 @@ const AppContent = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+      {!isAdminPath && <CompareFloatingDock />}
+      <CompareModal />
       {!isAdminPath && <Footer />}
     </div>
   );
@@ -145,7 +150,9 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <AppContent />
+            <CompareProvider>
+              <AppContent />
+            </CompareProvider>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

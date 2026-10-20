@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart, Check, Sliders } from 'lucide-react';
 import PriceDisplay from '../common/PriceDisplay';
 import RatingStars from '../common/RatingStars';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { useCompare } from '../../context/CompareContext';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { isInCompare, toggleCompare } = useCompare();
+
+  const [isAdded, setIsAdded] = useState(false);
 
   if (!product) return null;
 
   const inWishlist = isInWishlist(product._id);
+  const inCompare = isInCompare(product._id);
   const isOutOfStock = product.stock <= 0;
   const isLowStock = product.stock > 0 && product.stock <= 5;
   const mainImage = product.images?.[0] || '/placeholder-electronics.svg';
@@ -22,9 +27,17 @@ const ProductCard = ({ product }) => {
     e.target.src = '/placeholder-electronics.svg';
   };
 
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    if (isOutOfStock) return;
+    addToCart(product, 1);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1400);
+  };
+
   return (
     <div className={`product-card ${isOutOfStock ? 'card-out-of-stock' : ''}`}>
-      {/* Card Header: Badges & Wishlist Action */}
+      {/* Card Header: Badges & Wishlist / Compare Actions */}
       <div className="card-top-bar">
         <div className="card-badges-stack">
           {product.isFeatured && <span className="badge-tag tag-featured">Featured</span>}
@@ -33,17 +46,36 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        <button
-          className={`wishlist-btn-circle ${inWishlist ? 'active' : ''}`}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleWishlist(product);
-          }}
-          aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-        >
-          <Heart size={18} fill={inWishlist ? '#EF4444' : 'transparent'} color={inWishlist ? '#EF4444' : '#64748B'} />
-        </button>
+        <div className="card-top-actions">
+          {/* Quick Compare Button */}
+          <button
+            type="button"
+            className={`compare-btn-circle ${inCompare ? 'active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleCompare(product);
+            }}
+            title={inCompare ? 'Remove from compare' : 'Compare specifications'}
+            aria-label="Compare product"
+          >
+            <Sliders size={15} />
+          </button>
+
+          {/* Wishlist Button */}
+          <button
+            type="button"
+            className={`wishlist-btn-circle ${inWishlist ? 'active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleWishlist(product);
+            }}
+            aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart size={18} fill={inWishlist ? '#EF4444' : 'transparent'} color={inWishlist ? '#EF4444' : '#64748B'} />
+          </button>
+        </div>
       </div>
 
       {/* Product Image Link */}
@@ -101,12 +133,22 @@ const ProductCard = ({ product }) => {
         {/* Actions Button */}
         <div className="card-actions-row">
           <button
-            className="btn btn-primary btn-add-cart"
+            type="button"
+            className={`btn btn-primary btn-add-cart ${isAdded ? 'btn-added-pop' : ''}`}
             disabled={isOutOfStock}
-            onClick={() => addToCart(product, 1)}
+            onClick={handleAddToCart}
           >
-            <ShoppingCart size={16} />
-            <span>{isOutOfStock ? 'Sold Out' : 'Add to Cart'}</span>
+            {isAdded ? (
+              <>
+                <Check size={16} />
+                <span>Added! ✓</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={16} />
+                <span>{isOutOfStock ? 'Sold Out' : 'Add to Cart'}</span>
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -115,3 +157,4 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
+
