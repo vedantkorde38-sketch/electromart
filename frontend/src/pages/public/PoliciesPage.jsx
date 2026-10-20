@@ -32,13 +32,13 @@ const PoliciesPage = () => {
           </p>
         </div>
 
-        {/* Academic Demo Disclaimer Banner */}
-        <div className="policy-disclaimer-alert">
-          <AlertTriangle size={24} className="alert-icon" />
+        {/* Customer Protection & Guarantee Banner */}
+        <div className="policy-disclaimer-alert enterprise-guarantee-alert">
+          <ShieldCheck size={24} className="alert-icon text-primary" />
           <div className="alert-text">
-            <strong>Demonstration Policy Notice (College Mini Project)</strong>
+            <strong>Official Consumer Protection &amp; Quality Guarantee</strong>
             <p>
-              These policies are formulated for academic demonstration and evaluation purposes to show compliance with Indian e-commerce standards, consumer protection norms, and IT security best practices.
+              ElectroMart operates in full compliance with the Indian Consumer Protection (E-Commerce) Rules and Bureau of Indian Standards (BIS) for consumer electronics. All products are backed by authentic brand manufacturer warranties.
             </p>
           </div>
         </div>
@@ -103,8 +103,8 @@ const PoliciesPage = () => {
 
               <h3>3. Delivery Timelines</h3>
               <ul>
-                <li><strong>Tier 1 Metro Hubs (Bengaluru, Mumbai, Delhi-NCR, Hyderabad, Chennai, Kolkata):</strong> 24 to 48 business hours.</li>
-                <li><strong>Tier 2 and Tier 3 Indian Cities:</strong> 3 to 5 business days.</li>
+                <li><strong>Tier 1 Metro Hubs (Mumbai, Pune, Delhi-NCR, Bengaluru, Hyderabad, Chennai, Kolkata):</strong> 24 to 48 business hours.</li>
+                <li><strong>Tier 2 and Tier 3 Indian Cities:</strong> 3 to 4 business days.</li>
                 <li><strong>Remote and Island Regions:</strong> 5 to 7 business days.</li>
               </ul>
 
@@ -200,9 +200,9 @@ const PoliciesPage = () => {
                 Users are responsible for maintaining the confidentiality of their account credentials. Creating accounts with false identities or attempting unauthorized administrative access is strictly prohibited.
               </p>
 
-              <h3>4. Academic Project Context</h3>
+              <h3>4. Governing Law &amp; Jurisdiction</h3>
               <p>
-                This website is built as an educational full-stack engineering mini project. Demonstration transactions (including test payments and mock orders) do not constitute legally binding commercial deliveries unless deployed in production with licensed payment gateways.
+                These terms, operations, and transactions are governed by the laws of India. Any disputes or inquiries shall be subject to the exclusive jurisdiction of the competent courts in Mumbai, Maharashtra.
               </p>
             </div>
           )}

@@ -6414,3 +6414,319 @@ button:active, .btn:active, .ios-cat-pill:active {
   background-color: var(--ios-blue-hover) !important;
 }
 
+/* --------------------------------------------------------------------------
+   7. iOS FAQ Page Styles
+   -------------------------------------------------------------------------- */
+.ios-faq-page {
+  padding: 2.5rem 0 5rem 0;
+}
+
+.faq-search-wrapper {
+  position: relative;
+  max-width: 540px;
+  margin: 1.5rem auto 1.25rem auto;
+}
+
+.faq-search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8e8e93;
+}
+
+.faq-search-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--ios-card-border);
+  border-radius: var(--ios-radius-pill);
+  padding: 0.85rem 2.8rem 0.85rem 3.2rem;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.faq-search-input:focus {
+  outline: none;
+  border-color: var(--ios-blue);
+  box-shadow: 0 0 0 4px var(--ios-blue-light);
+}
+
+.faq-search-clear {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #e5e5ea;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #8e8e93;
+  cursor: pointer;
+}
+
+.faq-category-pills-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.faq-pill-btn {
+  background: #ffffff;
+  border: 1px solid var(--ios-card-border);
+  padding: 0.45rem 1rem;
+  border-radius: var(--ios-radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.faq-pill-btn.active {
+  background: var(--ios-blue);
+  color: #ffffff;
+  border-color: var(--ios-blue);
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.25);
+}
+
+.faq-category-card {
+  background: #ffffff;
+  border-radius: var(--ios-radius-card);
+  border: 1px solid var(--ios-card-border);
+  box-shadow: var(--ios-shadow-subtle);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.faq-count-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-left: auto;
+}
+
+.faq-chevron-bubble {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.faq-accordion-item.open .faq-chevron-bubble {
+  background: var(--ios-blue-light);
+  color: var(--ios-blue);
+}
+
+.ios-support-card {
+  background: #ffffff;
+  border-radius: var(--ios-radius-card);
+  border: 1px solid var(--ios-card-border);
+  box-shadow: var(--ios-shadow-subtle);
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.support-card-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.support-icon-bubble {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--ios-blue-light);
+  color: var(--ios-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.support-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. iOS Deals & Offers Page Styles
+   -------------------------------------------------------------------------- */
+.ios-deals-page {
+  padding-bottom: 5rem;
+}
+
+.apple-deals-hero {
+  background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  border-radius: var(--ios-radius-card);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+}
+
+.deals-coupons-section {
+  margin: 2rem 0;
+}
+
+.coupons-section-header {
+  margin-bottom: 1.25rem;
+}
+
+.coupons-section-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ios-coupon-card {
+  background: #ffffff;
+  border-radius: var(--ios-radius-card);
+  border: 1.5px dashed #cbd5e1;
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: var(--ios-shadow-subtle);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+}
+
+.ios-coupon-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--ios-blue);
+  box-shadow: var(--ios-shadow-hover);
+}
+
+.coupon-tag-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #059669;
+  background: #dcfce7;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.coupon-code-pill {
+  font-family: monospace;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--ios-blue);
+  background: var(--ios-blue-light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+}
+
+.btn-copy-coupon-ios {
+  margin-top: auto;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--ios-radius-pill);
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-copy-coupon-ios:hover {
+  background: #e2e8f0;
+}
+
+.btn-copy-coupon-ios.copied {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #86efac;
+}
+
+.deals-filter-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 1.5rem 0;
+  scrollbar-width: none;
+}
+
+.deal-filter-pill {
+  background: #ffffff;
+  border: 1px solid var(--ios-card-border);
+  border-radius: var(--ios-radius-pill);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.deal-filter-pill.active {
+  background: var(--ios-blue);
+  color: #ffffff;
+  border-color: var(--ios-blue);
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer Security Notice Card
+   -------------------------------------------------------------------------- */
+.security-notice-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  margin-top: 1rem;
+}
+
+.security-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}
+
+.security-text {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 0;
+}
+
+

@@ -85,10 +85,10 @@ const ContactPage = () => {
                 <MapPin size={24} />
               </div>
               <div>
-                <h4>Headquarters &amp; Fulfillment Center</h4>
-                <p>ElectroMart India Technology Hub</p>
-                <p>Plot No. 42, Electronic City Phase 1</p>
-                <p>Bengaluru, Karnataka 560100, India</p>
+                <h4>Headquarters &amp; Experience Center</h4>
+                <p>ElectroMart India Corporate Tower</p>
+                <p>One BKC, G-Block, Bandra Kurla Complex</p>
+                <p>Bandra (East), Mumbai, Maharashtra 400051, India</p>
               </div>
             </div>
 

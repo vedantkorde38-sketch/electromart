@@ -231,7 +231,7 @@ const ProductDetailsPage = () => {
               ) : (
                 <div className="stock-alert alert-in">
                   <CheckCircle size={18} />
-                  <span>In Stock &amp; Ready to Ship from Bengaluru warehouse</span>
+                  <span>In Stock &amp; Ready to Ship from Mumbai warehouse</span>
                 </div>
               )}
             </div>

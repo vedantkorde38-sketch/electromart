@@ -59,7 +59,7 @@ const OrderConfirmationPage = () => {
           </div>
           <h1 className="confirmation-title">Thank You For Your Order!</h1>
           <p className="confirmation-subtext">
-            Your electronics order has been placed successfully and sent to our Bengaluru fulfillment center.
+            Your electronics order has been placed successfully and sent to our Mumbai corporate fulfillment center.
           </p>
           <div className="order-number-badge">
             <span>Order Reference:</span>

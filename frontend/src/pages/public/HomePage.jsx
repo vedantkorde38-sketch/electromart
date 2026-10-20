@@ -52,11 +52,11 @@ const HomePage = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Aditya Verma',
-      location: 'Bengaluru, Karnataka',
+      name: 'Aditya Mehta',
+      location: 'Mumbai, Maharashtra',
       role: 'Verified Buyer',
       rating: 5,
-      comment: 'Ordered the Samsung S24 Ultra. Delivered in Bengaluru within 24 hours in pristine tamper-evident packaging. Genuine Indian warranty activated instantly!'
+      comment: 'Ordered the Samsung S24 Ultra. Delivered in Mumbai within 24 hours in pristine tamper-evident packaging. Genuine Indian warranty activated instantly!'
     },
     {
       id: 2,

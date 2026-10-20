@@ -90,17 +90,17 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* College Project Badge Notice */}
-        <div className="project-academic-notice">
-          <Award size={36} className="notice-icon" />
+        {/* Mumbai Corporate Headquarters & Nationwide Reach */}
+        <div className="project-academic-notice corporate-reach-notice">
+          <Award size={36} className="notice-icon text-primary" />
           <div className="notice-content">
-            <h4>College Mini Project Demonstration</h4>
+            <h4>Headquartered in Mumbai • Delivering Pan-India</h4>
             <p>
-              ElectroMart is designed and developed as a complete Full-Stack Web Development Mini Project utilizing <strong>React.js (Vite), Express.js, Node.js, MongoDB (Mongoose), JWT Authentication</strong>, and custom responsive CSS. Designed for academic demonstration, viva presentation, and e-commerce software architecture evaluation.
+              Operating from our corporate headquarters at <strong>Bandra Kurla Complex (BKC), Mumbai</strong>, ElectroMart coordinates dedicated electronics fulfillment across 28 states and 8 union territories. All devices are directly sourced from authorized brand distribution channels with official manufacturer warranty and original retail seals.
             </p>
             <div className="notice-actions">
-              <Link to="/shop" className="btn btn-primary">Browse Catalogue</Link>
-              <Link to="/contact" className="btn btn-outline">Contact Developer</Link>
+              <Link to="/shop" className="btn btn-primary">Browse Electronics Catalog</Link>
+              <Link to="/contact" className="btn btn-outline">Contact Mumbai Center</Link>
             </div>
           </div>
         </div>

@@ -97,7 +97,7 @@ const Footer = () => {
             <div className="footer-contact-info">
               <div className="contact-row">
                 <MapPin size={16} />
-                <span>Electronics City, Phase 1, Bengaluru, Karnataka 560100</span>
+                <span>One BKC, G Block, Bandra Kurla Complex, Bandra (E), Mumbai, Maharashtra 400051</span>
               </div>
               <div className="contact-row">
                 <Phone size={16} />
@@ -141,7 +141,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Newsletter & Project Info */}
+          {/* Column 4: Newsletter & Security Info */}
           <div className="footer-col col-newsletter">
             <h4 className="footer-heading">Get Special Offers</h4>
             <p className="newsletter-text">
@@ -166,10 +166,10 @@ const Footer = () => {
               </button>
             </form>
 
-            <div className="demo-notice-card">
-              <span className="demo-badge">College Mini Project</span>
-              <p className="demo-text">
-                Built as a demonstration full-stack MERN application. All prices are in Indian Rupees (₹).
+            <div className="security-notice-card">
+              <span className="security-badge">Verified Enterprise</span>
+              <p className="security-text">
+                Authorized electronics distributor across India. 100% genuine retail products with official brand warranties.
               </p>
             </div>
           </div>

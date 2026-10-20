@@ -39,7 +39,7 @@ const OrderTrackingStepper = ({ orderStatus = 'Confirmed', orderDate = new Date(
     },
     {
       title: 'Packed & Hub QA',
-      desc: 'ElectroMart Bengaluru Hub',
+      desc: 'ElectroMart Mumbai BKC Hub',
       icon: Package,
       time: 'Day 1'
     },
@@ -147,7 +147,7 @@ const OrderTrackingStepper = ({ orderStatus = 'Confirmed', orderDate = new Date(
       <div className="tracking-courier-strip">
         <div className="courier-meta-item">
           <span>Current Location:</span>
-          <strong>Bengaluru Central Logistics Hub</strong>
+          <strong>Mumbai Central Logistics Hub (BKC)</strong>
         </div>
         <div className="courier-meta-item">
           <span>Dispatch Mode:</span>

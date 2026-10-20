@@ -58,7 +58,7 @@ const LoginPage = () => {
 
         {/* Demo Login Quick Fill Strip */}
         <div className="demo-credentials-strip">
-          <span className="demo-strip-label">College Viva Demo Shortcuts:</span>
+          <span className="demo-strip-label">Instant 1-Click Access:</span>
           <div className="demo-buttons-row">
             <button
               type="button"

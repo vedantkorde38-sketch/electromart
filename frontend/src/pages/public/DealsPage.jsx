@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Tag, Sparkles, Copy, Check } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Tag, Sparkles, Copy, Check, Flame, ArrowRight, Percent, ShieldCheck } from 'lucide-react';
 import ProductGrid from '../../components/products/ProductGrid';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import FlashDealsTimer from '../../components/home/FlashDealsTimer';
 import { useToast } from '../../context/ToastContext';
 import api from '../../services/api';
 
@@ -9,13 +10,14 @@ const DealsPage = () => {
   const [dealProducts, setDealProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copiedCode, setCopiedCode] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const { showToast } = useToast();
 
   useEffect(() => {
     const fetchDeals = async () => {
       try {
         setLoading(true);
-        const { data } = await api.get('/products?discountOnly=true&limit=24&sort=price_desc');
+        const { data } = await api.get('/products?discountOnly=true&limit=36&sort=price_desc');
         if (data.success && data.products) {
           setDealProducts(data.products);
         }
@@ -32,86 +34,164 @@ const DealsPage = () => {
   const copyCoupon = (code) => {
     navigator.clipboard.writeText(code);
     setCopiedCode(code);
-    showToast(`Copied code "${code}" to clipboard!`, 'success');
+    showToast(`Coupon code "${code}" copied to clipboard!`, 'success');
     setTimeout(() => setCopiedCode(null), 2500);
   };
 
   const couponPromos = [
     {
       code: 'WELCOME10',
-      title: '10% Flat Discount',
-      desc: 'Applicable on first order above ₹999. Max discount ₹1,000.'
+      title: 'Flat 10% Discount',
+      desc: 'Applicable on your first order above ₹999. Max discount ₹1,000.',
+      tag: 'New Customer Special'
     },
     {
       code: 'ELECTRO200',
       title: 'Instant ₹200 OFF',
-      desc: 'Valid on electronics cart total of ₹1,499 or higher.'
+      desc: 'Valid on any electronics bag total of ₹1,499 or higher.',
+      tag: 'Instant Cart Savings'
     },
     {
       code: 'FESTIVE500',
       title: 'Mega ₹500 Savings',
-      desc: 'Valid on smart TVs, laptops, and appliances above ₹4,999.'
+      desc: 'Applicable on 4K TVs, laptops, and smart inverter appliances.',
+      tag: 'High Value Flagships'
     }
   ];
 
+  // Category filtering
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === 'all') return dealProducts;
+    return dealProducts.filter((p) => {
+      const slug = p.categorySlug || p.category?.slug || '';
+      if (selectedCategory === 'smartphones') return slug === 'smartphones';
+      if (selectedCategory === 'laptops') return slug.includes('laptop') || slug.includes('computer');
+      if (selectedCategory === 'tvs') return slug.includes('television') || slug.includes('tv');
+      if (selectedCategory === 'appliances') {
+        return slug.includes('conditioner') || slug.includes('refrigerator') || slug.includes('washing') || slug.includes('kitchen');
+      }
+      return true;
+    });
+  }, [dealProducts, selectedCategory]);
+
   return (
-    <div className="deals-page-container">
+    <div className="deals-page-container ios-deals-page">
       <div className="container">
-        {/* Deals Hero */}
-        <div className="deals-hero-banner">
-          <div className="deals-hero-content">
-            <span className="deals-badge">
-              <Sparkles size={16} /> Exclusive Offers &amp; Clearance
-            </span>
-            <h1 className="deals-main-heading">Today's Hottest Electronics Deals</h1>
+        {/* Apple Style Deals Hero */}
+        <div className="apple-deals-hero">
+          <div className="deals-hero-inner">
+            <div className="apple-hero-pill-badge" style={{ margin: '0 auto 1rem auto' }}>
+              <Flame size={14} className="flame-icon-pulse text-warning" />
+              <span>Limited-Time Clearance &amp; Flash Savings</span>
+            </div>
+            <h1 className="deals-main-heading">Exclusive Deals &amp; Offers</h1>
             <p className="deals-subtext">
-              Save up to 65% on smartphones, laptops, smart TVs, soundbars, and home appliances.
+              Save up to 65% on authentic flagship smartphones, M3 MacBooks, 4K Smart TVs, and inverter air conditioners.
             </p>
           </div>
         </div>
 
-        {/* Coupons Banner Strip */}
-        <div className="deals-coupons-grid">
-          {couponPromos.map((cp) => (
-            <div key={cp.code} className="deal-coupon-card">
-              <div className="coupon-card-header">
-                <Tag size={18} className="tag-icon" />
-                <span className="coupon-code-bold">{cp.code}</span>
-              </div>
-              <h4 className="coupon-title">{cp.title}</h4>
-              <p className="coupon-desc">{cp.desc}</p>
-              <button
-                type="button"
-                className="btn btn-outline btn-sm btn-copy-coupon"
-                onClick={() => copyCoupon(cp.code)}
-              >
-                {copiedCode === cp.code ? (
-                  <>
-                    <Check size={14} /> Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy size={14} /> Copy Code
-                  </>
-                )}
-              </button>
-            </div>
-          ))}
-        </div>
+        {/* Live Flash Deals Countdown Timer */}
+        <FlashDealsTimer />
 
-        {/* Discounted Products Grid */}
-        <div className="deals-products-wrapper">
-          <div className="section-header-compact">
-            <h2>Discounted Electronics ({dealProducts.length} items)</h2>
-            <span className="deals-stock-note">Hurry! Limited quantities available at discounted rates</span>
+        {/* Coupons Voucher Strip */}
+        <div className="deals-coupons-section">
+          <div className="coupons-section-header">
+            <span className="section-eyebrow">Instant Discounts</span>
+            <h3 className="coupons-section-title">Apply Coupons at Checkout</h3>
           </div>
 
-          <ProductGrid
-            products={dealProducts}
-            loading={loading}
-            emptyTitle="No deals currently live"
-            emptyDescription="All deals have been claimed. Check back shortly for new promotions!"
-          />
+          <div className="deals-coupons-grid">
+            {couponPromos.map((cp) => (
+              <div key={cp.code} className="deal-coupon-card ios-coupon-card">
+                <div className="coupon-card-header">
+                  <div className="coupon-tag-badge">
+                    <Tag size={13} />
+                    <span>{cp.tag}</span>
+                  </div>
+                  <div className="coupon-code-pill">{cp.code}</div>
+                </div>
+                <h4 className="coupon-title">{cp.title}</h4>
+                <p className="coupon-desc">{cp.desc}</p>
+                <button
+                  type="button"
+                  className={`btn-copy-coupon-ios ${copiedCode === cp.code ? 'copied' : ''}`}
+                  onClick={() => copyCoupon(cp.code)}
+                >
+                  {copiedCode === cp.code ? (
+                    <>
+                      <Check size={15} /> <span>Code Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={15} /> <span>Tap to Copy Code</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Deal Tabs */}
+        <div className="deals-filter-strip">
+          <button
+            type="button"
+            className={`deal-filter-pill ${selectedCategory === 'all' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('all')}
+          >
+            All Discounted Deals ({dealProducts.length})
+          </button>
+          <button
+            type="button"
+            className={`deal-filter-pill ${selectedCategory === 'smartphones' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('smartphones')}
+          >
+            📱 Smartphones
+          </button>
+          <button
+            type="button"
+            className={`deal-filter-pill ${selectedCategory === 'laptops' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('laptops')}
+          >
+            💻 Laptops &amp; Macs
+          </button>
+          <button
+            type="button"
+            className={`deal-filter-pill ${selectedCategory === 'tvs' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('tvs')}
+          >
+            📺 4K Smart TVs
+          </button>
+          <button
+            type="button"
+            className={`deal-filter-pill ${selectedCategory === 'appliances' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('appliances')}
+          >
+            ❄️ Inverter Appliances
+          </button>
+        </div>
+
+        {/* Discounted Product Grid */}
+        <div className="deals-products-wrapper">
+          {loading ? (
+            <LoadingSpinner text="Loading verified electronics deals..." />
+          ) : filteredProducts.length === 0 ? (
+            <div className="empty-deals-box text-center">
+              <Percent size={48} className="text-muted" />
+              <h3>No deals in this category right now</h3>
+              <p>Check back shortly or view all discounted electronics deals.</p>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setSelectedCategory('all')}
+              >
+                View All Deals
+              </button>
+            </div>
+          ) : (
+            <ProductGrid products={filteredProducts} />
+          )}
         </div>
       </div>
     </div>

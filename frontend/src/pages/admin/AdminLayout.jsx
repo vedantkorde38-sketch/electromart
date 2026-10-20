@@ -103,8 +103,8 @@ const AdminLayout = () => {
 
           <div className="admin-sidebar-footer">
             <div className="admin-system-note">
-              <span>MERN College Mini Project</span>
-              <strong>RESTful API v1.0</strong>
+              <span>ElectroMart Operations</span>
+              <strong>Enterprise Retail v1.0</strong>
             </div>
           </div>
         </aside>

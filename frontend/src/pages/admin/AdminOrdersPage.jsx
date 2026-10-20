@@ -257,7 +257,7 @@ const AdminOrdersPage = () => {
                   >
                     <option value="Pending">Pending</option>
                     <option value="Confirmed">Confirmed</option>
-                    <option value="Processing">Processing (Packaging in Bengaluru)</option>
+                    <option value="Processing">Processing (Packaging in Mumbai Hub)</option>
                     <option value="Shipped">Shipped (Dispatched to Courier)</option>
                     <option value="Delivered">Delivered (Completed)</option>
                     <option value="Cancelled">Cancelled (Restore Stock)</option>
