@@ -121,6 +121,42 @@ const startServer = async () => {
     if (categoryCount === 0) {
       console.log('[ElectroMart] Empty database detected. Auto-seeding initial electronics catalog...');
       await seedDatabase(false);
+    } else {
+      // Auto-heal broken or outdated catalog images (AC and Refrigerator)
+      try {
+        const Product = require('./models/Product');
+        await Category.updateOne(
+          { slug: 'air-conditioners' },
+          { $set: { image: 'https://images.unsplash.com/photo-1759772238012-9d5ad59ae637?w=600&auto=format&fit=crop&q=80' } }
+        );
+        await Category.updateOne(
+          { slug: 'refrigerators' },
+          { $set: { image: 'https://images.unsplash.com/photo-1588854337115-1c67d9247e4d?w=600&auto=format&fit=crop&q=80' } }
+        );
+        await Product.updateOne(
+          { name: { $regex: /LG 242L/i } },
+          { $set: { images: ['https://images.unsplash.com/photo-1588854337115-1c67d9247e4d?w=700&auto=format&fit=crop&q=80'] } }
+        );
+        await Product.updateOne(
+          { name: { $regex: /Whirlpool 192L/i } },
+          { $set: { images: ['https://images.unsplash.com/photo-1582466226723-5a8d62aa82d2?w=700&auto=format&fit=crop&q=80'] } }
+        );
+        await Product.updateOne(
+          { name: { $regex: /Daikin 1.5/i } },
+          { $set: { images: ['https://images.unsplash.com/photo-1759772238012-9d5ad59ae637?w=700&auto=format&fit=crop&q=80'] } }
+        );
+        await Product.updateOne(
+          { name: { $regex: /Voltas 1.5/i } },
+          { $set: { images: ['https://plus.unsplash.com/premium_photo-1679943423706-570c6462f9a4?w=700&auto=format&fit=crop&q=80'] } }
+        );
+        await Product.updateOne(
+          { name: { $regex: /Panasonic 1 Ton/i } },
+          { $set: { images: ['https://images.pexels.com/photos/17417642/pexels-photo-17417642.jpeg?auto=compress&cs=tinysrgb&w=800'] } }
+        );
+        console.log('[ElectroMart] Catalog images synchronized successfully.');
+      } catch (syncErr) {
+        console.warn('[ElectroMart] Image auto-sync warning:', syncErr.message);
+      }
     }
 
     app.listen(PORT, () => {

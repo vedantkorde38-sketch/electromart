@@ -303,7 +303,7 @@ const productsData = [
     ratingCount: 340,
     isFeatured: true,
     images: [
-      'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=700&auto=format&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1588854337115-1c67d9247e4d?w=700&auto=format&fit=crop&q=80'
     ],
     description: 'Frost Free double door refrigerator with Smart Inverter Compressor, Door Cooling+, Multi Air Flow, and toughened glass shelves.',
     specifications: {
@@ -352,7 +352,7 @@ const productsData = [
     ratingCount: 410,
     isFeatured: false,
     images: [
-      'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=700&auto=format&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1582466226723-5a8d62aa82d2?w=700&auto=format&fit=crop&q=80'
     ],
     description: 'Economical single door refrigerator with Insulated Capillary Technology, 9 hours of cooling retention during power cuts, and extra large vegetable drawer.',
     specifications: {
@@ -453,7 +453,7 @@ const productsData = [
     ratingCount: 220,
     isFeatured: true,
     images: [
-      'https://images.unsplash.com/photo-1614633833026-07204ef2267b?w=700&auto=format&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1759772238012-9d5ad59ae637?w=700&auto=format&fit=crop&q=80'
     ],
     description: 'Daikin Patented Swing Inverter Compressor with PM 2.5 air purifying filter, 3D airflow, and Coanda airflow ceiling cooling technology.',
     specifications: {
@@ -477,7 +477,7 @@ const productsData = [
     ratingCount: 380,
     isFeatured: false,
     images: [
-      'https://images.unsplash.com/photo-1614633833026-07204ef2267b?w=700&auto=format&fit=crop&q=80'
+      'https://plus.unsplash.com/premium_photo-1679943423706-570c6462f9a4?w=700&auto=format&fit=crop&q=80'
     ],
     description: 'India’s most reliable AC with 4-in-1 Adjustable Cooling modes allowing capacity adjustments between 0.75 Ton, 1.0 Ton, 1.25 Ton, and 1.5 Ton based on room occupancy.',
     specifications: {
@@ -500,7 +500,7 @@ const productsData = [
     ratingCount: 140,
     isFeatured: false,
     images: [
-      'https://images.unsplash.com/photo-1614633833026-07204ef2267b?w=700&auto=format&fit=crop&q=80'
+      'https://images.pexels.com/photos/17417642/pexels-photo-17417642.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
     description: 'Miraie IoT-enabled smart air conditioner. Control with Alexa, Google Assistant, or smartphone app. Features 7-in-1 Convertible modes and PM 0.1 Air Purification.',
     specifications: {

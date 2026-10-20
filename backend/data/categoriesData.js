@@ -21,7 +21,7 @@ const categoriesData = [
     name: 'Refrigerators',
     slug: 'refrigerators',
     description: 'Energy-efficient double-door, side-by-side, and frost-free smart refrigerators.',
-    image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1588854337115-1c67d9247e4d?w=600&auto=format&fit=crop&q=80'
   },
   {
     name: 'Washing Machines',
@@ -33,7 +33,7 @@ const categoriesData = [
     name: 'Air Conditioners',
     slug: 'air-conditioners',
     description: 'Inverter split ACs with convertible modes, copper condenser, and PM 2.5 filters.',
-    image: 'https://images.unsplash.com/photo-1614633833026-07204ef2267b?w=600&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1759772238012-9d5ad59ae637?w=600&auto=format&fit=crop&q=80'
   },
   {
     name: 'Kitchen Appliances',
