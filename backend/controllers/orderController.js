@@ -15,7 +15,7 @@ const generateOrderNumber = () => {
 // @access  Private
 const createOrder = async (req, res, next) => {
   try {
-    const { items, shippingAddress, paymentMethod = 'COD', couponCode } = req.body;
+    const { items, shippingAddress, paymentMethod = 'COD', couponCode, transactionId } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
@@ -163,8 +163,9 @@ const createOrder = async (req, res, next) => {
       shippingFee,
       totalAmount,
       couponCode: appliedCoupon ? appliedCoupon.code : null,
-      paymentMethod: paymentMethod === 'ONLINE_DEMO' ? 'ONLINE_DEMO' : 'COD',
-      paymentStatus: paymentMethod === 'ONLINE_DEMO' ? 'Completed' : 'Pending',
+      paymentMethod: ['ONLINE_UPI', 'ONLINE_DEMO'].includes(paymentMethod) ? paymentMethod : 'COD',
+      paymentStatus: ['ONLINE_UPI', 'ONLINE_DEMO'].includes(paymentMethod) ? 'Completed' : 'Pending',
+      transactionId: transactionId ? String(transactionId).trim() : '',
       orderStatus: 'Confirmed'
     });
 

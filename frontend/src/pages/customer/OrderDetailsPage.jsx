@@ -249,8 +249,20 @@ const OrderDetailsPage = () => {
               <div className="side-card-body">
                 <div className="payment-meta-row">
                   <span className="meta-label">Payment Mode:</span>
-                  <strong>{order.paymentMethod === 'COD' ? 'Cash on Delivery (COD)' : 'Demo Online Payment'}</strong>
+                  <strong>
+                    {order.paymentMethod === 'COD'
+                      ? 'Cash on Delivery (COD)'
+                      : order.paymentMethod === 'ONLINE_UPI'
+                      ? 'UPI QR Code Payment'
+                      : 'Online Payment (Verified)'}
+                  </strong>
                 </div>
+                {order.transactionId && (
+                  <div className="payment-meta-row">
+                    <span className="meta-label">UPI Ref / UTR:</span>
+                    <strong style={{ fontFamily: 'monospace' }}>{order.transactionId}</strong>
+                  </div>
+                )}
                 <div className="payment-meta-row">
                   <span className="meta-label">Payment Status:</span>
                   <span className={`status-pill pill-${order.paymentStatus?.toLowerCase()}`}>

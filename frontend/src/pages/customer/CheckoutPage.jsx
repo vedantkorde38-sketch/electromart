@@ -8,7 +8,12 @@ import {
   Plus,
   ShieldCheck,
   Truck,
-  ArrowRight
+  ArrowRight,
+  QrCode,
+  Copy,
+  Check,
+  X,
+  Smartphone
 } from 'lucide-react';
 import OrderSummary from '../../components/cart/OrderSummary';
 import { useAuth } from '../../context/AuthContext';
@@ -23,10 +28,27 @@ const CheckoutPage = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
+  const UPI_ID = 'vedantkorde38@okaxis';
+  const PAYEE_NAME = 'ElectroMart';
+
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
   const [isAddingNewAddress, setIsAddingNewAddress] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('COD'); // 'COD' | 'ONLINE_DEMO'
+  const [paymentMethod, setPaymentMethod] = useState('ONLINE_UPI'); // 'ONLINE_UPI' | 'COD'
   const [submittingOrder, setSubmittingOrder] = useState(false);
+  const [showUpiModal, setShowUpiModal] = useState(false);
+  const [transactionId, setTransactionId] = useState('');
+  const [copiedUpi, setCopiedUpi] = useState(false);
+
+  // Dynamic UPI URL and QR Code image
+  const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${total}&cu=INR&tn=ElectroMart%20Order`;
+  const upiQrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUri)}&margin=10`;
+
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText(UPI_ID);
+    setCopiedUpi(true);
+    showToast('UPI ID copied to clipboard!', 'success');
+    setTimeout(() => setCopiedUpi(false), 2500);
+  };
 
   // New address form state
   const [newAddress, setNewAddress] = useState({
@@ -75,22 +97,36 @@ const CheckoutPage = () => {
     }
   };
 
-  const handlePlaceOrder = async () => {
-    // 1. Validate delivery address
-    let activeAddress = null;
+  const getActiveAddress = () => {
     if (isAddingNewAddress) {
       if (!newAddress.fullName || !newAddress.phone || !newAddress.street || !newAddress.city || !newAddress.postalCode) {
         showToast('Please provide a complete shipping address', 'error');
-        return;
+        return null;
       }
-      activeAddress = newAddress;
+      return newAddress;
     } else {
       if (!user?.addresses || user.addresses.length === 0) {
         showToast('Please add a delivery address', 'error');
-        return;
+        return null;
       }
-      activeAddress = user.addresses[selectedAddressIndex];
+      return user.addresses[selectedAddressIndex];
     }
+  };
+
+  const handlePlaceOrderClick = () => {
+    const activeAddress = getActiveAddress();
+    if (!activeAddress) return;
+
+    if (paymentMethod === 'ONLINE_UPI') {
+      setShowUpiModal(true);
+    } else {
+      executePlaceOrder('COD', '');
+    }
+  };
+
+  const executePlaceOrder = async (methodToUse = paymentMethod, utr = transactionId) => {
+    const activeAddress = getActiveAddress();
+    if (!activeAddress) return;
 
     try {
       setSubmittingOrder(true);
@@ -109,14 +145,21 @@ const CheckoutPage = () => {
           postalCode: activeAddress.postalCode,
           country: activeAddress.country || 'India'
         },
-        paymentMethod,
+        paymentMethod: methodToUse,
+        transactionId: utr ? String(utr).trim() : '',
         couponCode: coupon?.code || null
       };
 
       const { data } = await api.post('/orders', orderPayload);
 
       if (data.success && data.order) {
-        showToast('Order confirmed successfully!', 'success');
+        showToast(
+          methodToUse === 'ONLINE_UPI'
+            ? 'UPI Payment Verified! Order confirmed successfully!'
+            : 'Order confirmed successfully!',
+          'success'
+        );
+        setShowUpiModal(false);
         clearCart();
         navigate(`/order-confirmation/${data.order.orderNumber}`, {
           state: { order: data.order }
@@ -300,7 +343,30 @@ const CheckoutPage = () => {
 
               <div className="step-card-body">
                 <div className="payment-modes-stack">
-                  {/* Mode 1: Cash on Delivery */}
+                  {/* Mode 1: Instant UPI QR Code */}
+                  <label className={`payment-mode-item ${paymentMethod === 'ONLINE_UPI' ? 'selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="ONLINE_UPI"
+                      checked={paymentMethod === 'ONLINE_UPI'}
+                      onChange={() => setPaymentMethod('ONLINE_UPI')}
+                    />
+                    <div className="payment-mode-icon">
+                      <QrCode size={26} className="text-primary" />
+                    </div>
+                    <div className="payment-mode-details">
+                      <div className="payment-mode-title-row">
+                        <strong>Instant UPI QR Code (GPay / PhonePe / Paytm)</strong>
+                        <span className="badge-pill pill-recommended">Instant Confirmation</span>
+                      </div>
+                      <p className="payment-mode-desc">
+                        Scan the dynamic UPI QR code generated for your order using any UPI app. Zero convenience fees.
+                      </p>
+                    </div>
+                  </label>
+
+                  {/* Mode 2: Cash on Delivery */}
                   <label className={`payment-mode-item ${paymentMethod === 'COD' ? 'selected' : ''}`}>
                     <input
                       type="radio"
@@ -315,33 +381,9 @@ const CheckoutPage = () => {
                     <div className="payment-mode-details">
                       <div className="payment-mode-title-row">
                         <strong>Cash on Delivery (COD)</strong>
-                        <span className="badge-pill pill-recommended">Recommended for Viva</span>
                       </div>
                       <p className="payment-mode-desc">
-                        Pay with cash or UPI to the delivery agent upon receiving your electronic package. No upfront payment required.
-                      </p>
-                    </div>
-                  </label>
-
-                  {/* Mode 2: Demo Online Payment */}
-                  <label className={`payment-mode-item ${paymentMethod === 'ONLINE_DEMO' ? 'selected' : ''}`}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="ONLINE_DEMO"
-                      checked={paymentMethod === 'ONLINE_DEMO'}
-                      onChange={() => setPaymentMethod('ONLINE_DEMO')}
-                    />
-                    <div className="payment-mode-icon">
-                      <CreditCard size={26} className="text-primary" />
-                    </div>
-                    <div className="payment-mode-details">
-                      <div className="payment-mode-title-row">
-                        <strong>Instant Demo Online Payment (Cards / UPI)</strong>
-                        <span className="badge-pill pill-demo">Simulation</span>
-                      </div>
-                      <p className="payment-mode-desc">
-                        Simulates instant online payment authorization for demonstration purposes without charging real funds.
+                        Pay with cash or UPI to the delivery courier upon receiving your electronic package at your doorstep.
                       </p>
                     </div>
                   </label>
@@ -396,9 +438,15 @@ const CheckoutPage = () => {
                 type="button"
                 className="btn btn-primary btn-block btn-lg btn-place-order"
                 disabled={submittingOrder}
-                onClick={handlePlaceOrder}
+                onClick={handlePlaceOrderClick}
               >
-                <span>{submittingOrder ? 'Processing Order...' : `Place Order • ${formatINR(total)}`}</span>
+                <span>
+                  {submittingOrder
+                    ? 'Processing Order...'
+                    : paymentMethod === 'ONLINE_UPI'
+                    ? `Pay with UPI QR • ${formatINR(total)}`
+                    : `Place COD Order • ${formatINR(total)}`}
+                </span>
                 <ArrowRight size={18} />
               </button>
 
@@ -416,6 +464,123 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+
+      {/* UPI QR Payment Modal */}
+      {showUpiModal && (
+        <div className="modal-backdrop-overlay" onClick={() => !submittingOrder && setShowUpiModal(false)}>
+          <div className="upi-modal-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="upi-modal-header">
+              <div>
+                <h3 className="upi-modal-title">
+                  <QrCode size={22} />
+                  Scan & Pay via UPI
+                </h3>
+                <p className="upi-modal-subtitle">Pay securely using any UPI app</p>
+              </div>
+              <button
+                type="button"
+                className="upi-modal-close"
+                onClick={() => !submittingOrder && setShowUpiModal(false)}
+                title="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="upi-modal-body">
+              {/* Amount Display */}
+              <div className="upi-amount-card">
+                <div>
+                  <div className="upi-amount-label">Total Payable Amount</div>
+                  <small style={{ color: '#475569' }}>Inclusive of all taxes & delivery</small>
+                </div>
+                <div className="upi-amount-val">{formatINR(total)}</div>
+              </div>
+
+              {/* QR Code Container */}
+              <div className="upi-qr-card-wrapper">
+                <img
+                  src={upiQrCodeUrl}
+                  alt="ElectroMart UPI QR Code"
+                  className="upi-qr-image"
+                  loading="eager"
+                />
+                <div className="upi-qr-hint">
+                  <Smartphone size={16} />
+                  <span>Scan using GPay, PhonePe, Paytm or BHIM</span>
+                </div>
+                <div className="upi-apps-row">
+                  <span className="upi-app-pill">Google Pay</span>
+                  <span className="upi-app-pill">PhonePe</span>
+                  <span className="upi-app-pill">Paytm</span>
+                  <span className="upi-app-pill">BHIM</span>
+                  <span className="upi-app-pill">CRED</span>
+                </div>
+              </div>
+
+              {/* UPI ID Box with Copy Button */}
+              <div className="upi-id-copy-box">
+                <div>
+                  <div className="upi-id-label">Payee UPI ID ({PAYEE_NAME})</div>
+                  <div className="upi-id-value">{UPI_ID}</div>
+                </div>
+                <button
+                  type="button"
+                  className={`btn-copy-upi ${copiedUpi ? 'copied' : ''}`}
+                  onClick={handleCopyUpi}
+                >
+                  {copiedUpi ? <Check size={14} /> : <Copy size={14} />}
+                  <span>{copiedUpi ? 'Copied!' : 'Copy ID'}</span>
+                </button>
+              </div>
+
+              {/* Optional UTR / Reference No */}
+              <div className="upi-utr-group">
+                <label className="upi-utr-label">
+                  <span>UPI Reference / UTR Number</span>
+                  <span className="upi-utr-optional">Optional</span>
+                </label>
+                <input
+                  type="text"
+                  className="upi-utr-input"
+                  placeholder="e.g. 423849102938 (from UPI payment receipt)"
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                  maxLength={30}
+                />
+              </div>
+
+              {/* Confirmation CTA */}
+              <div className="upi-modal-actions">
+                <button
+                  type="button"
+                  className="btn-confirm-upi"
+                  disabled={submittingOrder}
+                  onClick={() => executePlaceOrder('ONLINE_UPI', transactionId)}
+                >
+                  {submittingOrder ? (
+                    <span>Verifying & Placing Order...</span>
+                  ) : (
+                    <>
+                      <CheckCircle size={18} />
+                      <span>I Have Paid • Confirm Order</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-cancel-upi"
+                  disabled={submittingOrder}
+                  onClick={() => setShowUpiModal(false)}
+                >
+                  Cancel / Choose another payment method
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

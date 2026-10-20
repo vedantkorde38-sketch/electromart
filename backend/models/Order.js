@@ -61,13 +61,17 @@ const orderSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['COD', 'ONLINE_DEMO'],
+    enum: ['COD', 'ONLINE_DEMO', 'ONLINE_UPI'],
     default: 'COD'
   },
   paymentStatus: {
     type: String,
     enum: ['Pending', 'Completed', 'Failed', 'Refunded'],
     default: 'Pending'
+  },
+  transactionId: {
+    type: String,
+    default: ''
   },
   orderStatus: {
     type: String,

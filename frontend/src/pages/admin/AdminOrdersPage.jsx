@@ -175,7 +175,11 @@ const AdminOrdersPage = () => {
                     </td>
                     <td>
                       <span className="pay-method-badge">
-                        {ord.paymentMethod === 'COD' ? 'Cash on Delivery' : 'Online Demo'}
+                        {ord.paymentMethod === 'COD'
+                          ? 'Cash on Delivery'
+                          : ord.paymentMethod === 'ONLINE_UPI'
+                          ? 'UPI QR Code'
+                          : 'Online Payment'}
                       </span>
                       <span className={`status-pill pill-${ord.paymentStatus?.toLowerCase()}`}>
                         {ord.paymentStatus}

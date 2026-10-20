@@ -151,9 +151,17 @@ const OrderConfirmationPage = () => {
                   <strong>
                     {order?.paymentMethod === 'COD'
                       ? 'Cash on Delivery (Pay on Receipt)'
-                      : 'Demo Online Payment (Simulated)'}
+                      : order?.paymentMethod === 'ONLINE_UPI'
+                      ? 'UPI QR Code Payment'
+                      : 'Online Payment (Verified)'}
                   </strong>
                 </p>
+                {order?.transactionId && (
+                  <p>
+                    UPI Ref / UTR:{' '}
+                    <strong style={{ fontFamily: 'monospace' }}>{order.transactionId}</strong>
+                  </p>
+                )}
                 <p>
                   Status:{' '}
                   <span className={`status-chip chip-${order?.paymentStatus?.toLowerCase()}`}>
