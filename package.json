@@ -1,0 +1,25 @@
+{
+  "name": "electromart-monorepo",
+  "version": "1.0.0",
+  "description": "ElectroMart — Full-Stack Electronics E-Commerce Web Application (College Mini Project)",
+  "private": true,
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "seed": "node backend/seeds/seed.js",
+    "test": "node backend/tests/api.test.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "keywords": [
+    "ecommerce",
+    "mern",
+    "electronics",
+    "react",
+    "nodejs",
+    "mongodb",
+    "college-project"
+  ],
+  "author": "ElectroMart Dev Team",
+  "license": "ISC"
+}

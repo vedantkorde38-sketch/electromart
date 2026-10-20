@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" fill="none">
+  <rect width="48" height="48" x="6" y="6" rx="12" fill="#2563EB"/>
+  <!-- Bolt icon inside shield/box -->
+  <path d="M32 16L20 32H30L26 44L40 26H28L32 16Z" fill="#FFFFFF"/>
+  <!-- Brand text -->
+  <text x="64" y="36" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="26" fill="#0F172A" letter-spacing="-0.5">Electro<tspan fill="#2563EB">Mart</tspan></text>
+  <text x="65" y="48" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="9" fill="#64748B" letter-spacing="1.2">ELECTRONICS STORE</text>
+</svg>
