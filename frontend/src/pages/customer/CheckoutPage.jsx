@@ -5,6 +5,8 @@ import {
   CreditCard,
   Banknote,
   CheckCircle,
+  CheckCircle2,
+  Loader2,
   Plus,
   ShieldCheck,
   Truck,
@@ -13,7 +15,8 @@ import {
   Copy,
   Check,
   X,
-  Smartphone
+  Smartphone,
+  Zap
 } from 'lucide-react';
 import OrderSummary from '../../components/cart/OrderSummary';
 import { useAuth } from '../../context/AuthContext';
@@ -37,18 +40,12 @@ const CheckoutPage = () => {
   const [submittingOrder, setSubmittingOrder] = useState(false);
   const [showUpiModal, setShowUpiModal] = useState(false);
   const [transactionId, setTransactionId] = useState('');
-  const [copiedUpi, setCopiedUpi] = useState(false);
+  const [paymentStep, setPaymentStep] = useState('scan'); // 'scan' | 'verifying' | 'success'
+  const [utrError, setUtrError] = useState('');
 
   // Dynamic UPI URL and QR Code image
   const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${total}&cu=INR&tn=ElectroMart%20Order`;
   const upiQrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUri)}&margin=10`;
-
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText(UPI_ID);
-    setCopiedUpi(true);
-    showToast('UPI ID copied to clipboard!', 'success');
-    setTimeout(() => setCopiedUpi(false), 2500);
-  };
 
   // New address form state
   const [newAddress, setNewAddress] = useState({
@@ -118,10 +115,45 @@ const CheckoutPage = () => {
     if (!activeAddress) return;
 
     if (paymentMethod === 'ONLINE_UPI') {
+      setPaymentStep('scan');
+      setUtrError('');
       setShowUpiModal(true);
     } else {
       executePlaceOrder('COD', '');
     }
+  };
+
+  const handleStartVerification = () => {
+    const cleanUtr = transactionId.trim();
+    if (!cleanUtr) {
+      setUtrError('Please enter the 12-digit UPI UTR / Reference number from your payment app');
+      return;
+    }
+    if (cleanUtr.length < 6) {
+      setUtrError('UTR / Reference number must be at least 6 to 12 digits (e.g. 423849102938)');
+      return;
+    }
+    setUtrError('');
+    setPaymentStep('verifying');
+    setTimeout(() => {
+      setPaymentStep('success');
+      setTimeout(() => {
+        executePlaceOrder('ONLINE_UPI', cleanUtr);
+      }, 1500);
+    }, 2200);
+  };
+
+  const handleSimulatePayment = () => {
+    const randomUtr = Math.floor(100000000000 + Math.random() * 900000000000).toString();
+    setTransactionId(randomUtr);
+    setUtrError('');
+    setPaymentStep('verifying');
+    setTimeout(() => {
+      setPaymentStep('success');
+      setTimeout(() => {
+        executePlaceOrder('ONLINE_UPI', randomUtr);
+      }, 1500);
+    }, 2200);
   };
 
   const executePlaceOrder = async (methodToUse = paymentMethod, utr = transactionId) => {
@@ -155,7 +187,7 @@ const CheckoutPage = () => {
       if (data.success && data.order) {
         showToast(
           methodToUse === 'ONLINE_UPI'
-            ? 'UPI Payment Verified! Order confirmed successfully!'
+            ? 'Transaction Complete! Order confirmed successfully!'
             : 'Order confirmed successfully!',
           'success'
         );
@@ -168,6 +200,7 @@ const CheckoutPage = () => {
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to place order. Please check stock and try again.';
       showToast(msg, 'error');
+      setPaymentStep('scan');
     } finally {
       setSubmittingOrder(false);
     }
@@ -467,7 +500,10 @@ const CheckoutPage = () => {
 
       {/* UPI QR Payment Modal */}
       {showUpiModal && (
-        <div className="modal-backdrop-overlay" onClick={() => !submittingOrder && setShowUpiModal(false)}>
+        <div
+          className="modal-backdrop-overlay"
+          onClick={() => paymentStep === 'scan' && !submittingOrder && setShowUpiModal(false)}
+        >
           <div className="upi-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="upi-modal-header">
               <div>
@@ -477,106 +513,146 @@ const CheckoutPage = () => {
                 </h3>
                 <p className="upi-modal-subtitle">Pay securely using any UPI app</p>
               </div>
-              <button
-                type="button"
-                className="upi-modal-close"
-                onClick={() => !submittingOrder && setShowUpiModal(false)}
-                title="Close"
-              >
-                <X size={18} />
-              </button>
+              {paymentStep === 'scan' && (
+                <button
+                  type="button"
+                  className="upi-modal-close"
+                  onClick={() => setShowUpiModal(false)}
+                  title="Close"
+                >
+                  <X size={18} />
+                </button>
+              )}
             </div>
 
             <div className="upi-modal-body">
-              {/* Amount Display */}
-              <div className="upi-amount-card">
-                <div>
-                  <div className="upi-amount-label">Total Payable Amount</div>
-                  <small style={{ color: '#475569' }}>Inclusive of all taxes & delivery</small>
-                </div>
-                <div className="upi-amount-val">{formatINR(total)}</div>
-              </div>
+              {paymentStep === 'scan' && (
+                <>
+                  {/* Amount Display */}
+                  <div className="upi-amount-card">
+                    <div>
+                      <div className="upi-amount-label">Payable to ElectroMart</div>
+                      <small style={{ color: '#475569' }}>Inclusive of all taxes & delivery</small>
+                    </div>
+                    <div className="upi-amount-val">{formatINR(total)}</div>
+                  </div>
 
-              {/* QR Code Container */}
-              <div className="upi-qr-card-wrapper">
-                <img
-                  src={upiQrCodeUrl}
-                  alt="ElectroMart UPI QR Code"
-                  className="upi-qr-image"
-                  loading="eager"
-                />
-                <div className="upi-qr-hint">
-                  <Smartphone size={16} />
-                  <span>Scan using GPay, PhonePe, Paytm or BHIM</span>
-                </div>
-                <div className="upi-apps-row">
-                  <span className="upi-app-pill">Google Pay</span>
-                  <span className="upi-app-pill">PhonePe</span>
-                  <span className="upi-app-pill">Paytm</span>
-                  <span className="upi-app-pill">BHIM</span>
-                  <span className="upi-app-pill">CRED</span>
-                </div>
-              </div>
+                  {/* QR Code Container */}
+                  <div className="upi-qr-card-wrapper">
+                    <img
+                      src={upiQrCodeUrl}
+                      alt="ElectroMart UPI QR Code"
+                      className="upi-qr-image"
+                      loading="eager"
+                    />
+                    <div className="upi-qr-hint">
+                      <Smartphone size={16} />
+                      <span>Scan using GPay, PhonePe, Paytm or BHIM</span>
+                    </div>
+                    <div className="upi-apps-row">
+                      <span className="upi-app-pill">Google Pay</span>
+                      <span className="upi-app-pill">PhonePe</span>
+                      <span className="upi-app-pill">Paytm</span>
+                      <span className="upi-app-pill">BHIM</span>
+                      <span className="upi-app-pill">CRED</span>
+                    </div>
+                  </div>
 
-              {/* UPI ID Box with Copy Button */}
-              <div className="upi-id-copy-box">
-                <div>
-                  <div className="upi-id-label">Payee UPI ID ({PAYEE_NAME})</div>
-                  <div className="upi-id-value">{UPI_ID}</div>
-                </div>
-                <button
-                  type="button"
-                  className={`btn-copy-upi ${copiedUpi ? 'copied' : ''}`}
-                  onClick={handleCopyUpi}
-                >
-                  {copiedUpi ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copiedUpi ? 'Copied!' : 'Copy ID'}</span>
-                </button>
-              </div>
+                  {/* UPI Reference / UTR Input */}
+                  <div className="upi-utr-group">
+                    <label className="upi-utr-label">
+                      <span>UPI Reference / 12-Digit UTR Number</span>
+                    </label>
+                    <input
+                      type="text"
+                      className={`upi-utr-input ${utrError ? 'input-error' : ''}`}
+                      placeholder="e.g. 423849102938 (from payment receipt)"
+                      value={transactionId}
+                      onChange={(e) => {
+                        setTransactionId(e.target.value);
+                        if (utrError) setUtrError('');
+                      }}
+                      maxLength={30}
+                    />
+                    {utrError && <p className="utr-error-text">{utrError}</p>}
+                    <span className="upi-utr-help-hint">
+                      After scanning and approving payment in your UPI app, enter the reference number above to confirm.
+                    </span>
+                  </div>
 
-              {/* Optional UTR / Reference No */}
-              <div className="upi-utr-group">
-                <label className="upi-utr-label">
-                  <span>UPI Reference / UTR Number</span>
-                  <span className="upi-utr-optional">Optional</span>
-                </label>
-                <input
-                  type="text"
-                  className="upi-utr-input"
-                  placeholder="e.g. 423849102938 (from UPI payment receipt)"
-                  value={transactionId}
-                  onChange={(e) => setTransactionId(e.target.value)}
-                  maxLength={30}
-                />
-              </div>
-
-              {/* Confirmation CTA */}
-              <div className="upi-modal-actions">
-                <button
-                  type="button"
-                  className="btn-confirm-upi"
-                  disabled={submittingOrder}
-                  onClick={() => executePlaceOrder('ONLINE_UPI', transactionId)}
-                >
-                  {submittingOrder ? (
-                    <span>Verifying & Placing Order...</span>
-                  ) : (
-                    <>
+                  {/* Confirmation CTA */}
+                  <div className="upi-modal-actions">
+                    <button
+                      type="button"
+                      className="btn-confirm-upi"
+                      onClick={handleStartVerification}
+                    >
                       <CheckCircle size={18} />
-                      <span>I Have Paid • Confirm Order</span>
-                    </>
-                  )}
-                </button>
+                      <span>Verify Payment & Confirm Order</span>
+                    </button>
 
-                <button
-                  type="button"
-                  className="btn-cancel-upi"
-                  disabled={submittingOrder}
-                  onClick={() => setShowUpiModal(false)}
-                >
-                  Cancel / Choose another payment method
-                </button>
-              </div>
+                    <button
+                      type="button"
+                      className="btn-simulate-pay"
+                      onClick={handleSimulatePayment}
+                      title="Quickly test payment verification with auto-generated UTR"
+                    >
+                      <Zap size={16} />
+                      <span>⚡ Auto-Detect Payment (Demo Simulation)</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn-cancel-upi"
+                      onClick={() => setShowUpiModal(false)}
+                    >
+                      Cancel / Choose another payment method
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {paymentStep === 'verifying' && (
+                <div className="upi-verification-state">
+                  <div className="upi-radar-spinner">
+                    <div className="radar-circle-outer"></div>
+                    <div className="radar-circle-inner"></div>
+                    <Loader2 size={38} className="spin-icon text-primary" />
+                  </div>
+                  <h3 className="verifying-title">Verifying UPI Payment...</h3>
+                  <p className="verifying-desc">
+                    Contacting UPI banking gateway to verify credit of <strong>{formatINR(total)}</strong> to ElectroMart merchant account.
+                  </p>
+                  {transactionId && (
+                    <div className="verifying-ref-badge">
+                      <span>Ref / UTR:</span> <code>{transactionId}</code>
+                    </div>
+                  )}
+                  <div className="verifying-pulse-dots">
+                    <span className="dot dot-1"></span>
+                    <span className="dot dot-2"></span>
+                    <span className="dot dot-3"></span>
+                    <span className="pulse-text">Matching transaction signature with bank switch...</span>
+                  </div>
+                </div>
+              )}
+
+              {paymentStep === 'success' && (
+                <div className="upi-verification-state success-state">
+                  <div className="success-checkmark-circle">
+                    <CheckCircle2 size={56} className="success-check-icon" />
+                  </div>
+                  <div className="success-state-pill">Payment Received ✓</div>
+                  <h3 className="success-state-title">Transaction Complete!</h3>
+                  <p className="success-state-desc">
+                    Payment of <strong>{formatINR(total)}</strong> has been verified successfully.
+                  </p>
+                  <div className="success-state-sub">
+                    <Loader2 size={16} className="spin-icon" />
+                    <span>Confirming order and generating invoice...</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
