@@ -11,6 +11,7 @@ import { CompareProvider } from './context/CompareContext';
 // Common Layout Elements
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import IosBottomTabBar from './components/common/IosBottomTabBar';
 import CompareFloatingDock from './components/compare/CompareFloatingDock';
 import CompareModal from './components/compare/CompareModal';
 import { ProtectedRoute, AdminRoute } from './components/routing/ProtectedRoute';
@@ -140,6 +141,7 @@ const AppContent = () => {
       {!isAdminPath && <CompareFloatingDock />}
       <CompareModal />
       {!isAdminPath && <Footer />}
+      {!isAdminPath && <IosBottomTabBar />}
     </div>
   );
 };

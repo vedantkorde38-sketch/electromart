@@ -5622,3 +5622,795 @@ button, input, select, textarea {
     padding-bottom: 0.5rem;
   }
 }
+
+/* ==========================================================================
+   Apple iOS 17/18 Design System & iPhone Application Aesthetic
+   ========================================================================== */
+
+:root {
+  --ios-blue: #0071e3;
+  --ios-blue-hover: #0077ed;
+  --ios-blue-light: rgba(0, 113, 227, 0.1);
+  --ios-bg: #f5f5f7;
+  --ios-dark: #1d1d1f;
+  --ios-card-bg: #ffffff;
+  --ios-card-border: rgba(0, 0, 0, 0.07);
+  --ios-text-secondary: #86868b;
+  --ios-radius-card: 22px;
+  --ios-radius-pill: 9999px;
+  --ios-blur-material: blur(24px) saturate(190%);
+  --ios-shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --ios-shadow-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  background-color: var(--ios-bg);
+  letter-spacing: -0.015em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.025em;
+}
+
+/* Touch micro-physics on interactive elements */
+button, .btn, .product-card, .category-card, .apple-brand-card, .ios-cat-pill {
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+button:active, .btn:active, .ios-cat-pill:active {
+  transform: scale(0.96);
+}
+
+/* Translucent Frosted Glass Navbar */
+.main-navbar {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: var(--ios-blur-material);
+  -webkit-backdrop-filter: var(--ios-blur-material);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-search-input {
+  border-radius: var(--ios-radius-pill) !important;
+  background-color: #f2f2f7 !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  padding-left: 1.25rem !important;
+  font-size: 0.88rem !important;
+  transition: all 0.2s ease;
+}
+
+.nav-search-input:focus {
+  background-color: #ffffff !important;
+  border-color: var(--ios-blue) !important;
+  box-shadow: 0 0 0 4px var(--ios-blue-light) !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. Apple Keynote Hero Slider
+   -------------------------------------------------------------------------- */
+.apple-hero-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 32px 32px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 3rem 0;
+}
+
+.apple-hero-container.titanium-dark {
+  background: radial-gradient(circle at 80% 50%, #1e293b 0%, #0f172a 60%, #020617 100%);
+  color: #ffffff;
+}
+
+.apple-hero-container.aluminum-light {
+  background: radial-gradient(circle at 80% 40%, #e2e8f0 0%, #f1f5f9 50%, #f8fafc 100%);
+  color: #0f172a;
+}
+
+.apple-hero-container.frost-ice {
+  background: radial-gradient(circle at 85% 50%, #dbeafe 0%, #eff6ff 60%, #f8fafc 100%);
+  color: #0f172a;
+}
+
+.apple-hero-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+}
+
+.apple-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  z-index: 2;
+  animation: heroTextSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroTextSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.apple-hero-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--ios-radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  width: fit-content;
+}
+
+.aluminum-light .apple-hero-pill-badge,
+.frost-ice .apple-hero-pill-badge {
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--ios-blue);
+  border-color: rgba(0, 113, 227, 0.2);
+}
+
+.apple-hero-title {
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.titanium-dark .apple-hero-title {
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.apple-hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 540px;
+  opacity: 0.88;
+}
+
+.apple-hero-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.aluminum-light .apple-hero-callout,
+.frost-ice .apple-hero-callout {
+  color: var(--ios-blue);
+}
+
+.apple-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.apple-btn-primary {
+  background-color: var(--ios-blue);
+  color: #ffffff;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--ios-radius-pill);
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+}
+
+.apple-btn-primary:hover {
+  background-color: var(--ios-blue-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.apple-btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: inherit;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--ios-radius-pill);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.aluminum-light .apple-btn-secondary,
+.frost-ice .apple-btn-secondary {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+
+.apple-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.apple-trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-top: 0.5rem;
+}
+
+.apple-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.apple-hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.apple-hero-img-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ios-radius-card);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.apple-hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: heroImgFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroImgFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.apple-slide-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.apple-slide-arrow:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.arrow-left { left: 1.5rem; }
+.arrow-right { right: 1.5rem; }
+
+.apple-dots-track {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.apple-dot-pill {
+  width: 32px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.apple-dot-pill.active {
+  background: var(--ios-blue);
+  width: 48px;
+}
+
+/* --------------------------------------------------------------------------
+   2. iOS Horizontal Category Strip (Segmented Pill Bar)
+   -------------------------------------------------------------------------- */
+.ios-category-strip-section {
+  padding: 1.5rem 0 0.5rem 0;
+}
+
+.ios-category-scroll-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem 1rem 0.25rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ios-category-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.ios-cat-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #ffffff;
+  border: 1px solid var(--ios-card-border);
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--ios-radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.ios-cat-icon-bubble {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+}
+
+.ios-cat-pill:hover {
+  background: #ffffff;
+  border-color: rgba(0, 113, 227, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.ios-cat-pill.active {
+  background: var(--ios-blue);
+  color: #ffffff;
+  border-color: var(--ios-blue);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+}
+
+.ios-cat-pill.active .ios-cat-icon-bubble {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   3. Apple Authorized Brand Showcase
+   -------------------------------------------------------------------------- */
+.apple-brand-showcase-section {
+  padding: 2rem 0;
+}
+
+.apple-brand-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.apple-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--ios-radius-pill);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.apple-brand-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.apple-brand-sub {
+  font-size: 0.88rem;
+  color: var(--ios-text-secondary);
+  max-width: 520px;
+  margin: 0.25rem auto 0 auto;
+}
+
+.apple-brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.85rem;
+}
+
+.apple-brand-card {
+  background: #ffffff;
+  border: 1px solid var(--ios-card-border);
+  border-radius: 16px;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.apple-brand-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 113, 227, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.apple-brand-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.apple-brand-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ios-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Flash Deals Live Countdown Timer
+   -------------------------------------------------------------------------- */
+.ios-flash-timer-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: var(--ios-radius-card);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+.ios-timer-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ios-flame-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.flame-icon-pulse {
+  animation: flamePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.ios-timer-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ios-timer-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.ios-timer-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.ios-timer-sub {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.ios-timer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ios-timer-label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.ios-timer-boxes {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ios-time-digit-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  min-width: 44px;
+  padding: 0.35rem 0.45rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ios-time-digit-box.accent-box {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.digit-val {
+  font-family: monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.digit-lbl {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-top: 0.2rem;
+}
+
+.digit-sep {
+  font-weight: 800;
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. iPhone Floating Bottom Tab Bar (Mobile/Tablet View)
+   -------------------------------------------------------------------------- */
+.ios-bottom-tabbar {
+  display: none;
+  position: fixed;
+  bottom: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  max-width: 420px;
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .ios-bottom-tabbar {
+    display: block;
+  }
+
+  /* Add padding to page content so tab bar doesn't overlap */
+  .main-viewport-content {
+    padding-bottom: 5.5rem;
+  }
+}
+
+.ios-tabbar-blur-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: var(--ios-blur-material);
+  -webkit-backdrop-filter: var(--ios-blur-material);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.ios-tabbar-items {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem 0.5rem;
+  z-index: 2;
+}
+
+.ios-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  color: #8e8e93;
+  padding: 0.3rem 0.6rem;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ios-tab-item.active {
+  color: var(--ios-blue);
+}
+
+.ios-tab-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ios-tab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ios-tab-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background: #ff3b30;
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #ffffff;
+}
+
+.ios-tab-badge-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  background: #ff9500;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   6. Apple-style Product Card Overhaul
+   -------------------------------------------------------------------------- */
+.product-card {
+  background: #ffffff !important;
+  border-radius: var(--ios-radius-card) !important;
+  border: 1px solid var(--ios-card-border) !important;
+  box-shadow: var(--ios-shadow-subtle) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: var(--ios-shadow-hover) !important;
+  border-color: rgba(0, 113, 227, 0.2) !important;
+}
+
+.product-card-thumb {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-card-thumb {
+  transform: scale(1.06);
+}
+
+.card-top-bar {
+  padding: 0.85rem 0.85rem 0 0.85rem;
+}
+
+.tag-featured {
+  background: rgba(0, 113, 227, 0.1) !important;
+  color: var(--ios-blue) !important;
+  border-radius: var(--ios-radius-pill) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.tag-discount {
+  background: #ff3b30 !important;
+  color: #ffffff !important;
+  border-radius: var(--ios-radius-pill) !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+}
+
+.product-brand-tag {
+  color: var(--ios-text-secondary) !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.product-card-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  color: #1d1d1f !important;
+}
+
+.btn-add-cart {
+  border-radius: var(--ios-radius-pill) !important;
+  background-color: var(--ios-blue) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25) !important;
+}
+
+.btn-add-cart:hover:not(:disabled) {
+  background-color: var(--ios-blue-hover) !important;
+}
+

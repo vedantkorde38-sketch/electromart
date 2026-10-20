@@ -14,6 +14,10 @@ import {
 } from 'lucide-react';
 import ProductCard from '../../components/products/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import AppleHeroSlider from '../../components/home/AppleHeroSlider';
+import IosCategoryBar from '../../components/home/IosCategoryBar';
+import BrandShowcase from '../../components/home/BrandShowcase';
+import FlashDealsTimer from '../../components/home/FlashDealsTimer';
 import api from '../../services/api';
 
 const HomePage = () => {
@@ -73,64 +77,15 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="home-page-container">
-      {/* 1. Hero Banner */}
-      <section className="hero-section">
-        <div className="container hero-layout">
-          <div className="hero-text-content">
-            <div className="hero-pill-badge">
-              <Zap size={14} className="bolt-icon" />
-              <span>India's Dedicated Electronics Store</span>
-            </div>
-            <h1 className="hero-heading">
-              Upgrade Your Everyday <span className="accent-text">Technology</span>.
-            </h1>
-            <p className="hero-subheading">
-              Explore authentic 5G smartphones, flagship laptops, 4K smart TVs, energy-efficient home appliances, and high-performance audio with transparent Indian pricing.
-            </p>
-            <div className="hero-cta-buttons">
-              <Link to="/shop" className="btn btn-primary btn-lg">
-                <span>Shop All Electronics</span>
-                <ArrowRight size={18} />
-              </Link>
-              <Link to="/deals" className="btn btn-outline-white btn-lg">
-                <Sparkles size={18} />
-                <span>Explore Deals</span>
-              </Link>
-            </div>
-            <div className="hero-trust-metrics">
-              <div className="trust-metric">
-                <strong>100%</strong>
-                <span>Genuine Brands</span>
-              </div>
-              <div className="metric-divider"></div>
-              <div className="trust-metric">
-                <strong>₹0 Delivery</strong>
-                <span>Over ₹999</span>
-              </div>
-              <div className="metric-divider"></div>
-              <div className="trust-metric">
-                <strong>COD</strong>
-                <span>Available Nationwide</span>
-              </div>
-            </div>
-          </div>
+    <div className="home-page-container ios-styled-home">
+      {/* 1. Apple Keynote Style Hero Slider */}
+      <AppleHeroSlider />
 
-          <div className="hero-visual-card">
-            <div className="hero-image-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800&auto=format&fit=crop&q=80"
-                alt="ElectroMart Technology Showcase"
-                className="hero-main-img"
-              />
-              <div className="floating-deal-badge">
-                <span className="badge-discount-rate">Up to 65% OFF</span>
-                <span className="badge-deal-category">Festival Tech Bonanza</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 2. iOS Segmented Horizontal Category Bar */}
+      <IosCategoryBar />
+
+      {/* 3. Authorized Brand Showcase Strip */}
+      <BrandShowcase />
 
       {/* 2. Popular Electronics Categories */}
       <section className="section-categories">
@@ -240,6 +195,8 @@ const HomePage = () => {
               See All Deals <ArrowRight size={16} />
             </Link>
           </div>
+
+          <FlashDealsTimer />
 
           {loading ? (
             <LoadingSpinner text="Fetching discounted deals..." />
