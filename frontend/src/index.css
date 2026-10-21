@@ -7244,5 +7244,899 @@ button:active, .btn:active, .ios-cat-pill:active {
   }
 }
 
+/* ==========================================================================
+   11. Apple Trade-In & Instant Electronics Exchange Calculator
+   ========================================================================== */
+
+/* Trade-In Banner Card (Product Details & Cart) */
+.apple-tradein-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--ios-radius-card, 20px);
+  padding: 1.25rem 1.4rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.apple-tradein-card:hover {
+  border-color: rgba(0, 113, 227, 0.25);
+  box-shadow: 0 8px 26px rgba(0, 113, 227, 0.08);
+}
+
+.tradein-incentive-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.incentive-left-cluster {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  flex: 1;
+}
+
+.tradein-icon-halo {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(0, 113, 227, 0.08);
+  color: var(--ios-blue, #0071e3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tradein-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.eyebrow-apple {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.eyebrow-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: var(--ios-blue, #0071e3);
+  color: #ffffff;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.incentive-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.35;
+}
+
+.incentive-heading strong {
+  color: var(--ios-blue, #0071e3);
+}
+
+.incentive-subtext {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.btn-estimate-tradein {
+  background: var(--ios-blue, #0071e3);
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--ios-radius-pill, 9999px);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0, 113, 227, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-estimate-tradein:hover {
+  background: var(--ios-blue-hover, #0077ed);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
+}
+
+/* Applied State */
+.apple-tradein-card.applied-state {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1.5px solid #86efac;
+}
+
+.tradein-applied-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.applied-left-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.applied-badge-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.applied-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #15803d;
+  background: #bbf7d0;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.applied-device-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.applied-saving-lead {
+  font-size: 0.84rem;
+  color: #475569;
+  margin: 0.2rem 0 0 0;
+}
+
+.applied-actions-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-tradein-recalc {
+  background: #ffffff;
+  border: 1px solid #86efac;
+  color: #15803d;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--ios-radius-pill, 9999px);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-tradein-recalc:hover {
+  background: #dcfce7;
+}
+
+.btn-tradein-remove {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-tradein-remove:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+/* Compact Mode (Cart Page Sidebar) */
+.apple-tradein-card.compact-mode {
+  padding: 1rem 1.15rem;
+  margin: 0 0 1.25rem 0;
+  border-radius: 16px;
+}
+
+.apple-tradein-card.compact-mode .incentive-left-cluster {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.apple-tradein-card.compact-mode .tradein-incentive-content {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.apple-tradein-card.compact-mode .btn-estimate-tradein {
+  width: 100%;
+  justify-content: center;
+}
+
+/* OrderSummary Discount Row */
+.row-tradein-discount {
+  color: #15803d !important;
+  background: #f0fdf4;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  margin: 0.2rem 0;
+}
+
+.tradein-summary-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+}
+
+.icon-tradein-spin {
+  animation: slowSpin 8s linear infinite;
+  color: #16a34a;
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.tradein-val-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.remove-tradein-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.remove-tradein-btn:hover {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+/* --------------------------------------------------------------------------
+   Trade-In Modal Window
+   -------------------------------------------------------------------------- */
+.tradein-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 1.5rem 1rem;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tradein-modal-dialog {
+  background: #ffffff;
+  border-radius: 26px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 65px -15px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.96) translateY(12px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.tradein-modal-header {
+  padding: 1.25rem 1.5rem 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tradein-brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ios-blue, #0071e3);
+  background: rgba(0, 113, 227, 0.08);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+}
+
+.spin-slow {
+  animation: slowSpin 6s linear infinite;
+}
+
+.tradein-close-btn {
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tradein-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Stepper Progress Bar */
+.tradein-stepper-header {
+  padding: 1rem 1.5rem 0.5rem 1.5rem;
+}
+
+.stepper-track-bar {
+  width: 100%;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.stepper-fill {
+  height: 100%;
+  background: var(--ios-blue, #0071e3);
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stepper-labels-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.stepper-labels-row span.active {
+  color: var(--ios-blue, #0071e3);
+  font-weight: 800;
+}
+
+/* Modal Body */
+.tradein-modal-body {
+  padding: 1.25rem 1.75rem 1.75rem 1.75rem;
+  overflow-y: auto;
+}
+
+.step-main-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.step-sub-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Category Grid */
+.tradein-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.tradein-cat-card {
+  background: #f8fafc;
+  border: 2px solid transparent;
+  border-radius: 18px;
+  padding: 1.15rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #334155;
+}
+
+.tradein-cat-card:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.tradein-cat-card.selected {
+  background: #eff6ff;
+  border-color: var(--ios-blue, #0071e3);
+  color: var(--ios-blue, #0071e3);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.15);
+}
+
+.cat-icon-bubble {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tradein-cat-card.selected .cat-icon-bubble {
+  background: var(--ios-blue, #0071e3);
+  color: #ffffff;
+}
+
+.cat-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Brand Selection */
+.tradein-brand-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.65rem;
+}
+
+.brand-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.brand-pill-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--ios-radius-pill, 9999px);
+  padding: 0.45rem 1.15rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.brand-pill-btn:hover {
+  background: #e2e8f0;
+}
+
+.brand-pill-btn.selected {
+  background: var(--ios-blue, #0071e3);
+  color: #ffffff;
+  border-color: var(--ios-blue, #0071e3);
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.25);
+}
+
+/* Model Selection */
+.model-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.model-option-card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.model-option-card:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.model-option-card.selected {
+  background: #eff6ff;
+  border-color: var(--ios-blue, #0071e3);
+}
+
+.model-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.model-name {
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.model-max-val {
+  font-size: 0.78rem;
+  color: #16a34a;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.check-selected-icon {
+  color: var(--ios-blue, #0071e3);
+}
+
+/* Storage Capacity */
+.storage-select-box {
+  margin-bottom: 1.5rem;
+}
+
+.storage-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.storage-pill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.4rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.storage-pill.selected {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* Diagnostics Questions */
+.diagnostics-questions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.question-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1rem 1.15rem;
+}
+
+.question-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.65rem;
+}
+
+.options-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.choice-pill {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.choice-pill:hover {
+  border-color: #94a3b8;
+}
+
+.choice-pill.selected {
+  background: #eff6ff;
+  border-color: var(--ios-blue, #0071e3);
+  color: var(--ios-blue, #0071e3);
+  font-weight: 700;
+}
+
+/* Bonus Addon Toggle */
+.bonus-addon-toggle {
+  background: #f0fdf4;
+  border: 1.5px dashed #86efac;
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.checkbox-container input {
+  width: 18px;
+  height: 18px;
+  accent-color: #16a34a;
+  cursor: pointer;
+}
+
+.toggle-label-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-label-content strong {
+  font-size: 0.85rem;
+  color: #065f46;
+}
+
+.bonus-tag {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+/* Step 4: Final Valuation */
+.valuation-celebration-bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.85rem auto;
+  box-shadow: 0 10px 24px rgba(234, 179, 8, 0.3);
+}
+
+.sparkle-icon {
+  color: #854d0e;
+}
+
+.valuation-subtitle-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.valuation-big-amount {
+  font-size: clamp(2.4rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0.2rem 0;
+  letter-spacing: -0.03em;
+}
+
+.valuation-device-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+  color: #475569;
+  margin-bottom: 1.25rem;
+}
+
+.valuation-breakdown-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  margin-bottom: 1.15rem;
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  color: #475569;
+  margin-bottom: 0.45rem;
+}
+
+.breakdown-row.highlight-green {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.breakdown-row.highlight-blue {
+  color: var(--ios-blue, #0071e3);
+  font-weight: 700;
+}
+
+.breakdown-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.65rem 0;
+}
+
+.final-total-row {
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.doorstep-guarantee-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.doorstep-guarantee-box p {
+  font-size: 0.78rem;
+  color: #1e40af;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Button Actions */
+.tradein-step-actions {
+  display: flex;
+  margin-top: 1.25rem;
+}
+
+.tradein-step-actions.double-btn {
+  gap: 0.75rem;
+}
+
+.tradein-step-actions.double-btn button:first-child {
+  flex: 0 0 100px;
+}
+
+.tradein-step-actions.double-btn button:last-child {
+  flex: 1;
+}
+
+.tradein-next-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--ios-radius-pill, 9999px) !important;
+}
+
+.btn-apply-tradein {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--ios-radius-pill, 9999px) !important;
+  background: var(--ios-blue, #0071e3) !important;
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35) !important;
+}
+
+.btn-apply-tradein:hover {
+  background: var(--ios-blue-hover, #0077ed) !important;
+}
+
+.final-sub-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.btn-text-recalculate {
+  background: none;
+  border: none;
+  color: var(--ios-blue, #0071e3);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-text-recalculate:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .tradein-cat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .options-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tradein-incentive-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-estimate-tradein {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
 
 

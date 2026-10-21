@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Tag, X, ArrowRight, Truck } from 'lucide-react';
+import { ShieldCheck, Tag, X, ArrowRight, Truck, RefreshCw } from 'lucide-react';
 import { formatINR } from '../../utils/currency';
 import { useCart } from '../../context/CartContext';
 
@@ -11,6 +11,9 @@ const OrderSummary = ({ showCheckoutBtn = true, checkoutStep = false }) => {
     subtotal,
     shippingFee,
     discount,
+    tradeIn,
+    tradeInCredit,
+    removeTradeIn,
     total,
     coupon,
     applyCoupon,
@@ -74,6 +77,28 @@ const OrderSummary = ({ showCheckoutBtn = true, checkoutStep = false }) => {
               Coupon Discount ({coupon?.code})
             </span>
             <span className="summary-val">- {formatINR(discount)}</span>
+          </div>
+        )}
+
+        {tradeInCredit > 0 && (
+          <div className="summary-row row-tradein-discount">
+            <span className="summary-label tradein-summary-label">
+              <RefreshCw size={14} className="icon-tradein-spin" />
+              <span>Trade-In Credit ({tradeIn?.deviceName?.slice(0, 22)}...)</span>
+            </span>
+            <div className="tradein-val-cluster">
+              <span className="summary-val text-emerald-600 font-bold">- {formatINR(tradeInCredit)}</span>
+              {!checkoutStep && (
+                <button
+                  type="button"
+                  className="remove-tradein-btn"
+                  onClick={removeTradeIn}
+                  title="Remove Trade-In"
+                >
+                  <X size={13} />
+                </button>
+              )}
+            </div>
           </div>
         )}
 

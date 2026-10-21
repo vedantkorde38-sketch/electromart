@@ -14,6 +14,14 @@ export const CartProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
   const [coupon, setCoupon] = useState(null);
+  const [tradeIn, setTradeIn] = useState(() => {
+    try {
+      const saved = localStorage.getItem('electromart_trade_in');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(false);
 
   // Sync cart from server for logged in user
@@ -174,13 +182,17 @@ export const CartProvider = ({ children }) => {
         await api.delete('/cart');
         setCartItems([]);
         setCoupon(null);
+        setTradeIn(null);
+        localStorage.removeItem('electromart_trade_in');
       } catch (err) {
         console.error('Failed to clear cart:', err);
       }
     } else {
       setCartItems([]);
       setCoupon(null);
+      setTradeIn(null);
       localStorage.removeItem('electromart_guest_cart');
+      localStorage.removeItem('electromart_trade_in');
     }
   };
 
@@ -207,7 +219,12 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  const total = Math.max(0, subtotal + shippingFee - discount);
+  // Trade-In credit calculation (capped at subtotal after coupon discount)
+  const tradeInCredit = tradeIn && subtotal > 0
+    ? Math.min(tradeIn.value, Math.max(0, subtotal - discount))
+    : 0;
+
+  const total = Math.max(0, subtotal + shippingFee - discount - tradeInCredit);
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   // Apply coupon via backend validation
@@ -241,12 +258,31 @@ export const CartProvider = ({ children }) => {
     showToast('Coupon removed', 'info');
   };
 
+  // Trade-In methods
+  const applyTradeIn = (tradeData) => {
+    setTradeIn(tradeData);
+    try {
+      localStorage.setItem('electromart_trade_in', JSON.stringify(tradeData));
+    } catch (e) {
+      console.error('Failed to save trade-in to localStorage:', e);
+    }
+    showToast(`Trade-In Credit of ₹${tradeData.value.toLocaleString('en-IN')} applied!`, 'success');
+  };
+
+  const removeTradeIn = () => {
+    setTradeIn(null);
+    localStorage.removeItem('electromart_trade_in');
+    showToast('Trade-In credit removed', 'info');
+  };
+
   const value = {
     cartItems,
     itemCount,
     subtotal,
     shippingFee,
     discount,
+    tradeIn,
+    tradeInCredit,
     total,
     coupon,
     loading,
@@ -256,6 +292,8 @@ export const CartProvider = ({ children }) => {
     clearCart,
     applyCoupon,
     removeCoupon,
+    applyTradeIn,
+    removeTradeIn,
     refreshCart: fetchServerCart
   };
 

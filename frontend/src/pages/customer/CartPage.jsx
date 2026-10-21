@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, ArrowLeft, Trash2, ShieldCheck } from 'lucide-react';
 import CartItem from '../../components/cart/CartItem';
 import OrderSummary from '../../components/cart/OrderSummary';
+import TradeInCard from '../../components/tradeIn/TradeInCard';
 import EmptyState from '../../components/common/EmptyState';
 import { useCart } from '../../context/CartContext';
 
@@ -72,6 +73,7 @@ const CartPage = () => {
 
           {/* Right Column: Order Summary */}
           <div className="cart-summary-column">
+            <TradeInCard compact={true} />
             <OrderSummary showCheckoutBtn={true} />
           </div>
         </div>

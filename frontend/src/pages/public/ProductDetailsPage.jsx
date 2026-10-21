@@ -20,6 +20,7 @@ import QuantitySelector from '../../components/products/QuantitySelector';
 import ReviewSection from '../../components/products/ReviewSection';
 import ProductCard from '../../components/products/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import TradeInCard from '../../components/tradeIn/TradeInCard';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useCompare } from '../../context/CompareContext';
@@ -309,6 +310,9 @@ const ProductDetailsPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Apple & ElectroMart Trade-In Calculator Card */}
+            <TradeInCard targetProduct={product} />
 
             {/* Assurance Badges */}
             <div className="details-assurance-card">
