@@ -84,7 +84,7 @@ const OrderSummary = ({ showCheckoutBtn = true, checkoutStep = false }) => {
           <div className="summary-row row-tradein-discount">
             <span className="summary-label tradein-summary-label">
               <RefreshCw size={14} className="icon-tradein-spin" />
-              <span>Trade-In Credit ({tradeIn?.deviceName?.slice(0, 22)}...)</span>
+              <span>Exchange Discount ({tradeIn?.deviceName?.slice(0, 22)}...)</span>
             </span>
             <div className="tradein-val-cluster">
               <span className="summary-val text-emerald-600 font-bold">- {formatINR(tradeInCredit)}</span>
@@ -93,7 +93,7 @@ const OrderSummary = ({ showCheckoutBtn = true, checkoutStep = false }) => {
                   type="button"
                   className="remove-tradein-btn"
                   onClick={removeTradeIn}
-                  title="Remove Trade-In"
+                  title="Remove Exchange Discount"
                 >
                   <X size={13} />
                 </button>

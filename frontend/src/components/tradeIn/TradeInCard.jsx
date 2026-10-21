@@ -12,7 +12,7 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
     <>
       <div className={`apple-tradein-card ${compact ? 'compact-mode' : ''} ${tradeIn ? 'applied-state' : ''}`}>
         {tradeIn ? (
-          /* Applied Trade-in State */
+          /* Applied Exchange State */
           <div className="tradein-applied-content">
             <div className="applied-left-cluster">
               <div className="applied-badge-icon">
@@ -21,11 +21,11 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
               <div className="applied-info">
                 <div className="applied-pill-tag">
                   <Sparkles size={13} />
-                  <span>Trade-In Credit Active</span>
+                  <span>Exchange Discount Active</span>
                 </div>
                 <h4 className="applied-device-title">{tradeIn.deviceName}</h4>
                 <p className="applied-saving-lead">
-                  Saving <strong className="text-emerald-600">{formatINR(tradeIn.value)}</strong> on your order total
+                  Saving <strong className="text-emerald-600">{formatINR(tradeIn.value)}</strong> with device exchange
                 </p>
               </div>
             </div>
@@ -42,14 +42,14 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
                 type="button"
                 className="btn-tradein-remove"
                 onClick={removeTradeIn}
-                title="Remove trade-in credit"
+                title="Remove exchange discount"
               >
                 <X size={16} />
               </button>
             </div>
           </div>
         ) : (
-          /* Default Incentive Banner State (Apple Store style) */
+          /* Default Incentive Banner State */
           <div className="tradein-incentive-content">
             <div className="incentive-left-cluster">
               <div className="tradein-icon-halo">
@@ -57,14 +57,14 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
               </div>
               <div className="incentive-text">
                 <div className="tradein-eyebrow">
-                  <span className="eyebrow-apple">Apple &amp; ElectroMart</span>
-                  <span className="eyebrow-badge">Trade In</span>
+                  <span className="eyebrow-apple">ElectroMart</span>
+                  <span className="eyebrow-badge">Exchange Offer</span>
                 </div>
                 <h4 className="incentive-heading">
-                  Get up to <strong>₹58,000</strong> credit towards this purchase
+                  Get up to <strong>₹58,000</strong> instant exchange discount
                 </h4>
                 <p className="incentive-subtext">
-                  Trade in your eligible smartphone, laptop, or smartwatch for instant savings at checkout. Seamless doorstep verification.
+                  Exchange your old smartphone, laptop, or smartwatch for instant savings at checkout. Seamless doorstep verification.
                 </p>
               </div>
             </div>
@@ -75,7 +75,7 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
                 className="btn-estimate-tradein"
                 onClick={() => setModalOpen(true)}
               >
-                <span>Estimate Trade-In</span>
+                <span>Check Exchange Value</span>
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -83,7 +83,7 @@ const TradeInCard = ({ compact = false, targetProduct = null }) => {
         )}
       </div>
 
-      {/* Trade In Modal */}
+      {/* Device Exchange Modal */}
       <TradeInModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

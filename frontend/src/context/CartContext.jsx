@@ -266,13 +266,13 @@ export const CartProvider = ({ children }) => {
     } catch (e) {
       console.error('Failed to save trade-in to localStorage:', e);
     }
-    showToast(`Trade-In Credit of ₹${tradeData.value.toLocaleString('en-IN')} applied!`, 'success');
+    showToast(`Exchange Discount of ₹${tradeData.value.toLocaleString('en-IN')} applied!`, 'success');
   };
 
   const removeTradeIn = () => {
     setTradeIn(null);
     localStorage.removeItem('electromart_trade_in');
-    showToast('Trade-In credit removed', 'info');
+    showToast('Exchange discount removed', 'info');
   };
 
   const value = {

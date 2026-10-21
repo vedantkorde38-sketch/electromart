@@ -311,7 +311,7 @@ const ProductDetailsPage = () => {
               </div>
             )}
 
-            {/* Apple & ElectroMart Trade-In Calculator Card */}
+            {/* ElectroMart Device Exchange Calculator Card */}
             <TradeInCard targetProduct={product} />
 
             {/* Assurance Badges */}

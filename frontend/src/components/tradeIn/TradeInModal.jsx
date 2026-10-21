@@ -236,7 +236,7 @@ const TradeInModal = ({ isOpen, onClose, targetProduct = null }) => {
         <div className="tradein-modal-header">
           <div className="tradein-brand-pill">
             <RefreshCw size={14} className="spin-slow" />
-            <span>Apple &amp; ElectroMart Trade-In</span>
+            <span>ElectroMart Device Exchange</span>
           </div>
           <button type="button" className="tradein-close-btn" onClick={onClose} aria-label="Close modal">
             <X size={20} />
@@ -263,7 +263,7 @@ const TradeInModal = ({ isOpen, onClose, targetProduct = null }) => {
             <div className="tradein-step-view animate-fade-in">
               <h2 className="step-main-title">Select your old device category</h2>
               <p className="step-sub-desc">
-                Trade in an eligible device for instant credit towards your order.
+                Exchange your eligible device for an instant discount towards your order.
               </p>
 
               {/* Category Pills */}
@@ -489,7 +489,7 @@ const TradeInModal = ({ isOpen, onClose, targetProduct = null }) => {
                     <span className="checkmark-box"></span>
                     <div className="toggle-label-content">
                       <strong>Include original box &amp; charging adapter</strong>
-                      <span className="bonus-tag">+₹800 Extra Trade-In Bonus</span>
+                      <span className="bonus-tag">+₹800 Extra Exchange Bonus</span>
                     </div>
                   </label>
                 </div>
@@ -523,7 +523,7 @@ const TradeInModal = ({ isOpen, onClose, targetProduct = null }) => {
                 <Sparkles size={28} className="sparkle-icon" />
               </div>
 
-              <span className="valuation-subtitle-label">VERIFIED ESTIMATED TRADE-IN VALUE</span>
+              <span className="valuation-subtitle-label">VERIFIED ESTIMATED EXCHANGE VALUE</span>
               <h1 className="valuation-big-amount">{formatINR(displayValue)}</h1>
 
               <div className="valuation-device-pill">
@@ -574,7 +574,7 @@ const TradeInModal = ({ isOpen, onClose, targetProduct = null }) => {
                   onClick={handleApplyToCart}
                 >
                   <CheckCircle2 size={20} />
-                  <span>Apply {formatINR(valuation.finalValue)} Discount to Order</span>
+                  <span>Apply {formatINR(valuation.finalValue)} Exchange Discount</span>
                 </button>
 
                 <div className="final-sub-links">
